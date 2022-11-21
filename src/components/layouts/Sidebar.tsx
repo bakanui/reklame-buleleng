@@ -13,7 +13,7 @@ const Sidebar = ({ showSidebar }: SidebarProps) => {
       className={`md:w-[22vw] w-[70vw] ${!showSidebar && "hidden"}`}
       aria-label="Sidebar"
     >
-      <div className="overflow-y-auto py-4 md:px-7 bg-primary rounded h-full min-h-screen text-white">
+      <div className="overflow-y-auto py-4 md:px-7 sticky top-0 bg-primary rounded h-screen text-white">
         <Link to="/" className="flex items-center pl-2.5 md:mb-12 mb-5">
           <img
             src={`/logo.png`}

@@ -35,7 +35,7 @@ const Pendataan = () => {
     <Layouts>
       <p className="pt-7 px-7 text-xl font-semibold">Data Reklame</p>
 
-      <div className="bg-white shadow-md rounded-md mx-7 px-6 my-7 pt-5">
+      <div className="bg-white shadow-md rounded-md mx-7 px-6 my-7 pt-5 pb-7">
         {/* Header */}
         <PendataanHeader
           keyword={keyword}

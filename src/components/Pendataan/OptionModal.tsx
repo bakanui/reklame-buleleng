@@ -6,7 +6,6 @@ interface ReklameModalProps {
   showModal: number;
   registration_id: number;
   reklame_id: number;
-  showConfirmDeleteModal: boolean;
   setShowConfirmDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -16,10 +15,8 @@ const OptionModal = ({
   registration_id,
   reklame_id,
   setShowConfirmDeleteModal,
-  showConfirmDeleteModal,
 }: ReklameModalProps) => {
   const navigate = useNavigate();
-  console.log(showModal);
 
   return (
     <div
@@ -28,11 +25,11 @@ const OptionModal = ({
       aria-hidden="true"
       className={`${
         showModal !== reklame_id && "hidden"
-      }  overflow-y-auto overflow-x-hidden z-50 md:inset-0`}
+      }  overflow-x-hidden z-50 md:relative right-0 top-3/4`}
     >
       <div
         onClickCapture={() => setShowModal(0)}
-        className="relative p-4 flex justify-end text-lg font-medium"
+        className="relative p-1 flex justify-end text-lg font-medium"
       >
         <div className="relative bg-secondary shadow-md w-40 pl-3 pt-2 h-24 rounded dark:bg-gray-700">
           <div

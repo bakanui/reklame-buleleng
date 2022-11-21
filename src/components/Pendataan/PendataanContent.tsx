@@ -48,7 +48,7 @@ const PendataanContent = ({
             </th>
           </tr>
         </thead>
-        <tbody className="overflow-y-auto font-medium">
+        <tbody className="font-medium">
           {data.map((i, n: number) => (
             <PendataanList
               i={i}

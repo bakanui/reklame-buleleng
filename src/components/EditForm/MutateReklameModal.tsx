@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import customFetch from "../../utils/customFetch";
 import { ReklameDetailType } from "../../utils/dataInterface";
 import dataMutation from "../../utils/dataMutation";
+import CoordinateMaps from "../RegistrationForm/CoordinateMaps";
 
 interface ReklameModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -412,6 +413,10 @@ const MutateReklameModal = ({
                 />
               </div>
             </form>
+            <CoordinateMaps
+              editTitikKoordinat={setTitik_koordinat}
+              titik_koordinat={titik_koordinat.value}
+            />
           </div>
 
           <div className="flex items-center justify-end p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">

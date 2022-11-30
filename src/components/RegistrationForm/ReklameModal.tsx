@@ -1,5 +1,6 @@
 import { useState } from "react";
 import dataMutation from "../../utils/dataMutation";
+import CoordinateMaps from "./CoordinateMaps";
 
 interface ReklameModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -259,6 +260,7 @@ const ReklameModal = ({
                   Titik Koordinat Pemasangan
                 </label>
                 <input
+                  value={titik_koordinat}
                   onChange={(e) => setTitik_koordinat(e.target.value)}
                   className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
                   type="text"
@@ -266,6 +268,12 @@ const ReklameModal = ({
                 />
               </div>
             </form>
+
+            <p className="font-semibold">Pilih Koordinat Dalam Peta</p>
+            <CoordinateMaps
+              setTitik_koordinat={setTitik_koordinat}
+              titik_koordinat={titik_koordinat}
+            />
           </div>
 
           <div className="flex items-center justify-end p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">

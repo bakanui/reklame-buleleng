@@ -76,6 +76,7 @@ const PendataanList = ({
           />
           <div className="md:relative top-0">
             <OptionModal
+              coordinate={i.titik_koordinat}
               registration_id={i.id_registrasi!}
               reklame_id={i.id!}
               setShowModal={setShowModal}

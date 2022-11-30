@@ -47,8 +47,8 @@ function DashboardLocation() {
             <MarkerF
               // onLoad={onLoad}
               position={{
-                lat: parseInt(i.position.lat),
-                lng: parseInt(i.position.lng),
+                lat: parseFloat(i.position.lat),
+                lng: parseFloat(i.position.lng),
               }}
               icon={{
                 path: "M12.75 0l-2.25 2.25 2.25 2.25-5.25 6h-5.25l4.125 4.125-6.375 8.452v0.923h0.923l8.452-6.375 4.125 4.125v-5.25l6-5.25 2.25 2.25 2.25-2.25-11.25-11.25zM10.5 12.75l-1.5-1.5 5.25-5.25 1.5 1.5-5.25 5.25z",

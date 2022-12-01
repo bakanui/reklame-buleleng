@@ -11,7 +11,7 @@ const customFetch = async (url: string) => {
   })
     .then((res) => {
       if (res.status === 401) {
-        window.location.href = "/";
+        window.location.href = "/login";
         // const status = fetch(`${base_url}/auth/refreshToken`, {
         //   method: "POST",
         //   headers: {

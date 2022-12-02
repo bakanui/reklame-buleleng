@@ -23,7 +23,7 @@ const Pembayaran = () => {
       </p>
 
       {/* Form Register */}
-      <FormRegister
+      {/* <FormRegister
         alamat_perusahaan={alamat_perusahaan}
         nama_reg={nama_reg}
         nik_reg={nik_reg}
@@ -36,7 +36,7 @@ const Pembayaran = () => {
         setNama_perusahaan={setNama_perusahaan}
         setNama_reg={setNama_reg}
         setNpwp_reg={setNpwp_reg}
-      />
+      /> */}
 
       <p className="pt-7 px-7 text-xl font-semibold flex items-center gap-3">
         List Data Reklame

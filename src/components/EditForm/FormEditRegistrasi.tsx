@@ -15,6 +15,7 @@ interface FormRegisterProps {
   setNo_telp: React.Dispatch<React.SetStateAction<string>>;
   expired_date: string;
   setExpired_date: React.Dispatch<React.SetStateAction<string>>;
+  handleRegister: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }
 
 const FormEditRegister = ({
@@ -34,15 +35,17 @@ const FormEditRegister = ({
   setNik_reg,
   setNo_telp,
   setNpwp_reg,
+  handleRegister,
 }: FormRegisterProps) => {
   return (
     <div className="bg-white shadow-md rounded-md mx-7 px-6 my-7 pt-5 font-medium">
-      <form className="py-7">
+      <form id="registerForm" onSubmit={handleRegister} className="py-7">
         <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
           <label className="md:w-52 w-full" htmlFor="no-registrasi">
             Nomor Registrasi
           </label>
           <input
+            required
             value={no_reg}
             readOnly
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -55,6 +58,7 @@ const FormEditRegister = ({
             Nama Pemohon
           </label>
           <input
+            required
             value={nama_reg}
             onChange={(e) => setNama_reg(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -67,6 +71,7 @@ const FormEditRegister = ({
             Nik
           </label>
           <input
+            required
             value={nik_reg}
             onChange={(e) => setNik_reg(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -79,6 +84,7 @@ const FormEditRegister = ({
             NPWP
           </label>
           <input
+            required
             value={npwp_reg}
             onChange={(e) => setNpwp_reg(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -91,6 +97,7 @@ const FormEditRegister = ({
             Nama Perusahaan
           </label>
           <input
+            required
             value={nama_perusahaan}
             onChange={(e) => setNama_perusahaan(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -103,6 +110,7 @@ const FormEditRegister = ({
             Alamat Perusahaan
           </label>
           <input
+            required
             value={alamat_perusahaan}
             onChange={(e) => setAlamat_perusahaan(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -115,6 +123,7 @@ const FormEditRegister = ({
             Nomor Telp/HP
           </label>
           <input
+            required
             value={no_telp}
             onChange={(e) => setNo_telp(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"

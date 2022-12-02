@@ -46,23 +46,37 @@ const EditForm = () => {
     }
   }, [id, changes]);
 
-  const handleRegister = async () => {
-    const body = {
-      nama_reg,
-      nik_reg,
-      npwp_reg,
-      nama_perusahaan,
-      alamat_perusahaan,
-      no_telp,
-      expired_date,
-    };
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("testing");
 
-    const res = await dataMutation(
-      "/api/reklame/update-registrasi/" + id,
-      body,
-      "PUT"
-    );
-    console.log(res);
+    if (
+      nama_reg &&
+      nik_reg &&
+      npwp_reg &&
+      nama_perusahaan &&
+      alamat_perusahaan &&
+      no_telp
+    ) {
+      const body = {
+        nama_reg,
+        nik_reg,
+        npwp_reg,
+        nama_perusahaan,
+        alamat_perusahaan,
+        no_telp,
+        expired_date,
+      };
+
+      const res = await dataMutation(
+        "/api/reklame/update-registrasi/" + id,
+        body,
+        "PUT"
+      );
+      console.log(res);
+    } else {
+      alert("Invalid Form");
+    }
   };
 
   return (
@@ -76,6 +90,7 @@ const EditForm = () => {
 
       {/* Form Register */}
       <FormEditRegister
+        handleRegister={handleRegister}
         no_reg={no_reg}
         setNo_reg={setNo_reg}
         alamat_perusahaan={alamat_perusahaan}
@@ -99,7 +114,8 @@ const EditForm = () => {
           <span>Batal</span>
         </button>
         <button
-          onClick={() => setShowConfirmModal(true)}
+          type="submit"
+          form="registerForm"
           className="bg-primary mb-5 font-semibold flex justify-center items-center gap-3 text-white rounded-md w-40 h-12"
         >
           <span>Simpan</span>

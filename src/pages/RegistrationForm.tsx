@@ -15,19 +15,31 @@ const RegistrationForm = () => {
 
   const navigate = useNavigate();
 
-  const handleRegister = async () => {
-    const body = {
-      nama_reg,
-      nik_reg,
-      npwp_reg,
-      nama_perusahaan,
-      alamat_perusahaan,
-      no_telp,
-    };
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (
+      nama_reg &&
+      nik_reg &&
+      npwp_reg &&
+      nama_perusahaan &&
+      alamat_perusahaan &&
+      no_telp
+    ) {
+      const body = {
+        nama_reg,
+        nik_reg,
+        npwp_reg,
+        nama_perusahaan,
+        alamat_perusahaan,
+        no_telp,
+      };
 
-    const res = await dataMutation("/api/reklame", body, "POST");
-    console.log(res.data.id);
-    navigate("/edit/" + res.data.id);
+      const res = await dataMutation("/api/reklame", body, "POST");
+      console.log(res.data.id);
+      navigate("/edit/" + res.data.id);
+    } else {
+      alert("Invalid Form");
+    }
   };
 
   return (
@@ -41,6 +53,7 @@ const RegistrationForm = () => {
 
       {/* Form Register */}
       <FormRegister
+        handleRegister={handleRegister}
         alamat_perusahaan={alamat_perusahaan}
         nama_reg={nama_reg}
         nik_reg={nik_reg}
@@ -63,7 +76,8 @@ const RegistrationForm = () => {
           <span>Batal</span>
         </button>
         <button
-          onClick={handleRegister}
+          type="submit"
+          form="newRegisterForm"
           className="bg-primary mb-5 font-semibold flex justify-center items-center gap-3 text-white rounded-md w-40 h-12"
         >
           <span>Simpan</span>

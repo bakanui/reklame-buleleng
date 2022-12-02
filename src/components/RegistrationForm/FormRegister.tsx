@@ -11,6 +11,7 @@ interface FormRegisterProps {
   setAlamat_perusahaan: React.Dispatch<React.SetStateAction<string>>;
   no_telp: string;
   setNo_telp: React.Dispatch<React.SetStateAction<string>>;
+  handleRegister: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }
 
 const FormRegister = ({
@@ -26,15 +27,17 @@ const FormRegister = ({
   setNik_reg,
   setNo_telp,
   setNpwp_reg,
+  handleRegister,
 }: FormRegisterProps) => {
   return (
     <div className="bg-white shadow-md rounded-md mx-7 px-6 my-7 pt-5 font-medium">
-      <form className="py-7">
+      <form id="newRegisterForm" onSubmit={handleRegister} className="py-7">
         <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
           <label className="md:w-52 w-full" htmlFor="no-registrasi">
             Nama Pemohon
           </label>
           <input
+            required
             onChange={(e) => setNama_reg(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
             type="text"
@@ -46,6 +49,7 @@ const FormRegister = ({
             Nik
           </label>
           <input
+            required
             onChange={(e) => setNik_reg(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
             type="number"
@@ -57,6 +61,7 @@ const FormRegister = ({
             NPWP
           </label>
           <input
+            required
             onChange={(e) => setNpwp_reg(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
             type="number"
@@ -68,6 +73,7 @@ const FormRegister = ({
             Nama Perusahaan
           </label>
           <input
+            required
             onChange={(e) => setNama_perusahaan(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
             type="text"
@@ -79,6 +85,7 @@ const FormRegister = ({
             Alamat Perusahaan
           </label>
           <input
+            required
             onChange={(e) => setAlamat_perusahaan(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
             type="text"
@@ -90,6 +97,7 @@ const FormRegister = ({
             Nomor Telp/HP
           </label>
           <input
+            required
             onChange={(e) => setNo_telp(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
             type="number"

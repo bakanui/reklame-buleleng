@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dataMutation from "../../utils/dataMutation";
+import Alert from "../layouts/Alert";
 import CoordinateMaps from "./CoordinateMaps";
 
 interface ReklameModalProps {
@@ -18,7 +19,7 @@ const ReklameModal = ({
   const [jumlah_muka, setjumlah_muka] = useState("");
   const [area_pemasangan, setArea_pemasangan] = useState("");
   const [bunyi_reklame, setBunyi_reklame] = useState("");
-  const [jenis_reklame, setJenis_reklame] = useState("");
+  const [jenis_reklame, setJenis_reklame] = useState("Jenis 1");
   const [panjang_reklame, setPanjang_reklame] = useState("");
   const [lebar_reklame, setLebar_reklame] = useState("");
   const [lama_pemasangan, setLama_pemasangan] = useState("");
@@ -27,11 +28,13 @@ const ReklameModal = ({
   const [tempat_pemasangan, setTempat_pemasangan] = useState("");
   const [titik_koordinat, setTitik_koordinat] = useState("");
 
+  const [alertMessage, setAlertMessage] = useState("");
+
   const handleClearForm = () => {
     setjumlah_muka("");
     setArea_pemasangan("");
     setBunyi_reklame("");
-    setJenis_reklame("");
+    setJenis_reklame("Jenis 1");
     setPanjang_reklame("");
     setLebar_reklame("");
     setLama_pemasangan("");
@@ -125,11 +128,11 @@ const ReklameModal = ({
         ],
       };
 
+      setShowModal(false);
       await dataMutation("/api/reklame/add-reklame", body, "POST").then(
         (res) => {
           setChanges((current) => current + 1);
           console.log(res);
-          setShowModal(false);
           handleClearForm();
         }
       );
@@ -137,6 +140,21 @@ const ReklameModal = ({
       alert("Invalid Form");
     }
   };
+
+  useEffect(() => {
+    if (tgl_mulai && tgl_akhir) {
+      const start = new Date(tgl_mulai);
+      const end = new Date(tgl_akhir);
+      const result = Math.floor(
+        (end.getTime() - start.getTime()) / (24 * 3600 * 1000)
+      );
+      if (result > 1) {
+        setLama_pemasangan(result + " hari");
+      } else {
+        setAlertMessage("Tanggal Pemasangan Reklame Tidak Sesuai!");
+      }
+    }
+  }, [tgl_mulai, tgl_akhir]);
 
   return (
     <div
@@ -198,6 +216,21 @@ const ReklameModal = ({
                 <label className="md:w-52 w-full" htmlFor="no-registrasi">
                   Jenis Reklame
                 </label>
+                <select
+                  value={jenis_reklame}
+                  onChange={(e) => setJenis_reklame(e.target.value)}
+                  id="countries"
+                  className="bg-gray-50 h-12 text-black border border-grey text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                >
+                  <option value="US">Jenis 1</option>
+                  <option value="CA">Jenis 2</option>
+                  <option value="FR">Jenis 3</option>
+                </select>
+              </div>
+              {/* <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
+                <label className="md:w-52 w-full" htmlFor="no-registrasi">
+                  Jenis Reklame
+                </label>
                 <input
                   required
                   value={jenis_reklame}
@@ -206,7 +239,7 @@ const ReklameModal = ({
                   type="text"
                   placeholder="Pilih jenis reklame..."
                 />
-              </div>
+              </div> */}
               <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
                 <label className="md:w-52 w-full" htmlFor="no-registrasi">
                   Area Pemasangan
@@ -261,19 +294,6 @@ const ReklameModal = ({
               </div>
               <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
                 <label className="md:w-52 w-full" htmlFor="no-registrasi">
-                  Lama Pemasangan
-                </label>
-                <input
-                  required
-                  value={lama_pemasangan}
-                  onChange={(e) => setLama_pemasangan(e.target.value)}
-                  className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
-                  type="text"
-                  placeholder="Masukan lama pemasangan reklame..."
-                />
-              </div>
-              <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
-                <label className="md:w-52 w-full" htmlFor="no-registrasi">
                   Tanggal Mulai Pemasangan
                 </label>
                 <input
@@ -296,6 +316,19 @@ const ReklameModal = ({
                   className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
                   type="date"
                   placeholder="Masukan tanggal akhir pemasangan reklame..."
+                />
+              </div>
+              <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
+                <label className="md:w-52 w-full" htmlFor="no-registrasi">
+                  Lama Pemasangan
+                </label>
+                <input
+                  required
+                  value={lama_pemasangan}
+                  onChange={(e) => setLama_pemasangan(e.target.value)}
+                  className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
+                  type="text"
+                  placeholder="Masukan lama pemasangan reklame..."
                 />
               </div>
               <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
@@ -352,6 +385,9 @@ const ReklameModal = ({
           </div>
         </div>
       </div>
+      {alertMessage && (
+        <Alert alertMessage={alertMessage} setAlertMessage={setAlertMessage} />
+      )}
     </div>
   );
 };

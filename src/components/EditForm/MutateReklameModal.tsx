@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import customFetch from "../../utils/customFetch";
 import { ReklameDetailType } from "../../utils/dataInterface";
 import dataMutation from "../../utils/dataMutation";
+import Alert from "../layouts/Alert";
 import CoordinateMaps from "../RegistrationForm/CoordinateMaps";
 
 interface ReklameModalProps {
@@ -86,11 +87,13 @@ const MutateReklameModal = ({
   const [lama_pemasangan, setLama_pemasangan] = useState({ id: 0, value: "" });
   const [tgl_mulai, setTgl_mulai] = useState({ id: 0, value: "" });
   const [tgl_akhir, setTgl_akhir] = useState({ id: 0, value: "" });
+  const [titik_koordinat, setTitik_koordinat] = useState({ id: 0, value: "" });
   const [tempat_pemasangan, setTempat_pemasangan] = useState({
     id: 0,
     value: "",
   });
-  const [titik_koordinat, setTitik_koordinat] = useState({ id: 0, value: "" });
+
+  const [alertMessage, setAlertMessage] = useState("");
 
   const handleAddReklame = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -187,6 +190,7 @@ const MutateReklameModal = ({
         ],
       };
 
+      setShowModal(false);
       await dataMutation(
         "/api/reklame/update-reklame/" + reklame_id,
         body,
@@ -194,12 +198,31 @@ const MutateReklameModal = ({
       ).then((res) => {
         console.log(res);
         setChanges((current) => current + 1);
-        setShowModal(false);
       });
     } else {
       alert("Invalid Form");
     }
   };
+
+  useEffect(() => {
+    if (tgl_mulai.value && tgl_akhir.value) {
+      const start = new Date(tgl_mulai.value);
+      const end = new Date(tgl_akhir.value);
+      const result = Math.floor(
+        (end.getTime() - start.getTime()) / (24 * 3600 * 1000)
+      );
+      if (result > 1) {
+        setLama_pemasangan((current) => ({
+          id: current.id,
+          value: result + " hari",
+        }));
+      } else {
+        console.log(tgl_mulai, tgl_akhir);
+
+        setAlertMessage("Tanggal Pemasangan Reklame Tidak Sesuai!");
+      }
+    }
+  }, [tgl_mulai, tgl_akhir]);
 
   return (
     <div
@@ -266,8 +289,7 @@ const MutateReklameModal = ({
                 <label className="md:w-52 w-full" htmlFor="no-registrasi">
                   Jenis Reklame
                 </label>
-                <input
-                  required
+                <select
                   value={jenis_reklame.value}
                   onChange={(e) =>
                     setJenis_reklame((current) => ({
@@ -275,10 +297,13 @@ const MutateReklameModal = ({
                       value: e.target.value,
                     }))
                   }
-                  className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
-                  type="text"
-                  placeholder="Pilih jenis reklame..."
-                />
+                  id="countries"
+                  className="bg-gray-50 h-12 text-black border border-grey text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                >
+                  <option value="US">Jenis 1</option>
+                  <option value="CA">Jenis 2</option>
+                  <option value="FR">Jenis 3</option>
+                </select>
               </div>
               <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
                 <label className="md:w-52 w-full" htmlFor="no-registrasi">
@@ -354,24 +379,6 @@ const MutateReklameModal = ({
               </div>
               <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
                 <label className="md:w-52 w-full" htmlFor="no-registrasi">
-                  Lama Pemasangan
-                </label>
-                <input
-                  required
-                  value={lama_pemasangan.value}
-                  onChange={(e) =>
-                    setLama_pemasangan((current) => ({
-                      id: current.id,
-                      value: e.target.value,
-                    }))
-                  }
-                  className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
-                  type="text"
-                  placeholder="Masukan lama pemasangan reklame..."
-                />
-              </div>
-              <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
-                <label className="md:w-52 w-full" htmlFor="no-registrasi">
                   Tanggal Mulai Pemasangan
                 </label>
                 <input
@@ -404,6 +411,24 @@ const MutateReklameModal = ({
                   className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
                   type="date"
                   placeholder="Masukan tanggal akhir pemasangan reklame..."
+                />
+              </div>
+              <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
+                <label className="md:w-52 w-full" htmlFor="no-registrasi">
+                  Lama Pemasangan
+                </label>
+                <input
+                  required
+                  value={lama_pemasangan.value}
+                  onChange={(e) =>
+                    setLama_pemasangan((current) => ({
+                      id: current.id,
+                      value: e.target.value,
+                    }))
+                  }
+                  className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
+                  type="text"
+                  placeholder="Masukan lama pemasangan reklame..."
                 />
               </div>
               <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
@@ -468,6 +493,9 @@ const MutateReklameModal = ({
           </div>
         </div>
       </div>
+      {alertMessage && (
+        <Alert alertMessage={alertMessage} setAlertMessage={setAlertMessage} />
+      )}
     </div>
   );
 };

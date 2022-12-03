@@ -9,6 +9,7 @@ import ConfirmModal from "../components/layouts/ConfirmModal";
 import MutateReklameModal from "../components/EditForm/MutateReklameModal";
 import FormEditRegister from "../components/EditForm/FormEditRegistrasi";
 import customFetch from "../utils/customFetch";
+import Alert from "../components/layouts/Alert";
 
 const EditForm = () => {
   const [showModal, setShowModal] = useState(false);
@@ -28,6 +29,7 @@ const EditForm = () => {
   const [reklameList, setReklameList] = useState([]);
 
   const [changes, setChanges] = useState(0);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const { id } = useParams();
 
@@ -48,16 +50,11 @@ const EditForm = () => {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("testing");
-
-    if (
-      nama_reg &&
-      nik_reg &&
-      npwp_reg &&
-      nama_perusahaan &&
-      alamat_perusahaan &&
-      no_telp
-    ) {
+    if (nik_reg.length !== 16) {
+      setAlertMessage("Data NIK Pemohon Tidak Sesuai");
+    } else if (npwp_reg.length !== 15 && npwp_reg.length !== 16) {
+      setAlertMessage("Data NPWP Pemohon Tidak Sesuai");
+    } else {
       const body = {
         nama_reg,
         nik_reg,
@@ -74,8 +71,6 @@ const EditForm = () => {
         "PUT"
       );
       console.log(res);
-    } else {
-      alert("Invalid Form");
     }
   };
 
@@ -110,9 +105,11 @@ const EditForm = () => {
       />
 
       <div className="flex justify-end mx-7 gap-7">
-        <button className="bg-white border border-primary mb-5 font-semibold flex justify-center items-center gap-3 text-primary rounded-md w-40 h-12">
-          <span>Batal</span>
-        </button>
+        <Link to={"/pendataan"}>
+          <button className="bg-white border border-primary mb-5 font-semibold flex justify-center items-center gap-3 text-primary rounded-md w-40 h-12">
+            <span>Batal</span>
+          </button>
+        </Link>
         <button
           type="submit"
           form="registerForm"
@@ -133,6 +130,9 @@ const EditForm = () => {
       />
 
       {/* Insert Reklame Modal */}
+      {alertMessage && (
+        <Alert alertMessage={alertMessage} setAlertMessage={setAlertMessage} />
+      )}
 
       <ReklameModal
         id_register={parseInt(id!)}

@@ -13,18 +13,18 @@ const Sidebar = ({ showSidebar }: SidebarProps) => {
       className={`md:w-[22vw] w-[70vw] ${!showSidebar && "hidden"}`}
       aria-label="Sidebar"
     >
-      <div className="overflow-y-auto py-4 md:px-7 sticky top-0 bg-primary rounded h-screen text-white">
+      <div className="overflow-y-auto py-4 md:px-5 sticky top-0 bg-primary rounded h-screen text-white">
         <a href="/" className="flex items-center pl-2.5 md:mb-12 mb-5">
           <img
             src={`/logo.png`}
-            className="mr-3 md:w-16 md:h-16 w-10 h-10"
+            className="mr-3 md:w-14 md:h-14 w-10 h-10"
             alt="BulelengLogo"
           />
           <div className="hidden md:block">
-            <p className="self-center md:text-xl font-semibold whitespace-nowrap">
+            <p className="self-center md:text-lg font-semibold whitespace-nowrap">
               Pendataan Reklame
             </p>
-            <p className="self-center md:text-md font-semibold whitespace-nowrap">
+            <p className="self-center md:text-base font-semibold whitespace-nowrap">
               Kabupaten Buleleng
             </p>
           </div>

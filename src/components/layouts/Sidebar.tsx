@@ -17,14 +17,14 @@ const Sidebar = ({ showSidebar }: SidebarProps) => {
         <a href="/" className="flex items-center pl-2.5 md:mb-12 mb-5">
           <img
             src={`/logo.png`}
-            className="mr-3 md:w-14 md:h-14 w-10 h-10"
+            className="mr-3 md:w-10 md:h-10 w-10 h-10"
             alt="BulelengLogo"
           />
           <div className="hidden md:block">
-            <p className="self-center md:text-lg font-semibold whitespace-nowrap">
+            <p className="self-center md:text-base font-semibold whitespace-nowrap">
               Pendataan Reklame
             </p>
-            <p className="self-center md:text-base font-semibold whitespace-nowrap">
+            <p className="self-center md:text-sm font-semibold whitespace-nowrap">
               Kabupaten Buleleng
             </p>
           </div>

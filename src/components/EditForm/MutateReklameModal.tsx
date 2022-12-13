@@ -300,17 +300,25 @@ const MutateReklameModal = ({
                   id="countries"
                   className="bg-gray-50 h-12 text-black border border-grey text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 >
-                  <option value="US">Jenis 1</option>
-                  <option value="CA">Jenis 2</option>
-                  <option value="FR">Jenis 3</option>
+                  <option value="megatron">Megatron/Videotron</option>
+                  <option value="billboard">Billboard</option>
+                  <option value="led">LED</option>
+                  <option value="papan">Papan</option>
+                  <option value="papan-bercahaya">Papan Bercahaya</option>
+                  <option value="baliho">Baliho</option>
+                  <option value="spanduk">
+                    Layar/Spanduk Umbul-Umbul dan Sejenisnya
+                  </option>
+                  <option value="plat">Tempel/Plat/Tembok</option>
+                  <option value="selebaran">Selebaran</option>
+                  <option value="kendaraan">Kendaraan</option>
                 </select>
               </div>
               <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
                 <label className="md:w-52 w-full" htmlFor="no-registrasi">
                   Area Pemasangan
                 </label>
-                <input
-                  required
+                <select
                   value={area_pemasangan.value}
                   onChange={(e) =>
                     setAreaPemasangan((current) => ({
@@ -318,10 +326,13 @@ const MutateReklameModal = ({
                       value: e.target.value,
                     }))
                   }
-                  className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
-                  type="text"
-                  placeholder="Masukan area pemasangan reklame..."
-                />
+                  id="countries"
+                  className="bg-gray-50 h-12 text-black border border-grey text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                >
+                  <option value="pariwisata">Pariwisata</option>
+                  <option value="perkotaan">Perkotaan</option>
+                  <option value="lainnya">Lainnya</option>
+                </select>
               </div>
               <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
                 <label className="md:w-52 w-full" htmlFor="no-registrasi">

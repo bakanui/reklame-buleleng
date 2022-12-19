@@ -4,6 +4,7 @@ import { IoChevronBackSharp } from "react-icons/io5";
 import FormRegister from "../components/RegistrationForm/FormRegister";
 import { Link, useNavigate } from "react-router-dom";
 import dataMutation from "../utils/dataMutation";
+import Alert from "../components/layouts/Alert";
 
 const RegistrationForm = () => {
   const [nama_reg, setNama_reg] = useState("");
@@ -13,21 +14,29 @@ const RegistrationForm = () => {
   const [alamat_perusahaan, setAlamat_perusahaan] = useState("");
   const [no_telp, setNo_telp] = useState("");
 
+  const [alertMessage, setAlertMessage] = useState("");
+
   const navigate = useNavigate();
 
-  const handleRegister = async () => {
-    const body = {
-      nama_reg,
-      nik_reg,
-      npwp_reg,
-      nama_perusahaan,
-      alamat_perusahaan,
-      no_telp,
-    };
-
-    const res = await dataMutation("/api/reklame", body, "POST");
-    console.log(res.data.id);
-    navigate("/edit/" + res.data.id);
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (nik_reg.length !== 16) {
+      setAlertMessage("Data NIK Pemohon Tidak Sesuai");
+    } else if (npwp_reg.length !== 15 && npwp_reg.length !== 16) {
+      setAlertMessage("Data NPWP Pemohon Tidak Sesuai");
+    } else {
+      const body = {
+        nama_reg,
+        nik_reg,
+        npwp_reg,
+        nama_perusahaan,
+        alamat_perusahaan,
+        no_telp,
+      };
+      const res = await dataMutation("/api/reklame", body, "POST");
+      console.log(res.data.id);
+      navigate("/edit/" + res.data.id);
+    }
   };
 
   return (
@@ -41,6 +50,7 @@ const RegistrationForm = () => {
 
       {/* Form Register */}
       <FormRegister
+        handleRegister={handleRegister}
         alamat_perusahaan={alamat_perusahaan}
         nama_reg={nama_reg}
         nik_reg={nik_reg}
@@ -59,18 +69,23 @@ const RegistrationForm = () => {
       {/* <ListReklame data={data} setShowModal={setShowModal} /> */}
 
       <div className="flex justify-end mx-7 gap-7">
-        <button className="bg-white border border-primary mb-5 font-semibold flex justify-center items-center gap-3 text-primary rounded-md w-40 h-12">
-          <span>Batal</span>
-        </button>
+        <Link to={"/pendataan"}>
+          <button className="bg-white border border-primary mb-5 font-semibold flex justify-center items-center gap-3 text-primary rounded-md w-40 h-12">
+            <span>Batal</span>
+          </button>
+        </Link>
         <button
-          onClick={handleRegister}
+          type="submit"
+          form="newRegisterForm"
           className="bg-primary mb-5 font-semibold flex justify-center items-center gap-3 text-white rounded-md w-40 h-12"
         >
           <span>Simpan</span>
         </button>
       </div>
 
-      {/* Insert Reklame Modal */}
+      {alertMessage && (
+        <Alert alertMessage={alertMessage} setAlertMessage={setAlertMessage} />
+      )}
 
       {/* <ReklameModal setShowModal={setShowModal} showModal={showModal} /> */}
     </Layouts>

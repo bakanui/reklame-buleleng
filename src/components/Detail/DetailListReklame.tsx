@@ -1,4 +1,5 @@
 import { ReklameDetailType } from "../../utils/dataInterface";
+import { TiLocationArrow } from "react-icons/ti";
 
 // interface FetchDataType {
 //   permohonan: Array<ReklameDetailType>
@@ -19,13 +20,13 @@ const DetailListReklame = ({ data }: ListReklameProps) => {
         <table className="w-max md:w-full text-center text-sm text-gray-500 dark:text-gray-400">
           <thead className="text-xs font-semibold text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr className="bg-white">
-              <th scope="col" className="py-3 md:px-5 px-2 w-2/12">
+              <th scope="col" className="py-3 md:px-5 px-2 w-1/12">
                 No
               </th>
               <th scope="col" className="py-3 md:px-5 px-2 w-2/12">
                 Jenis Reklame
               </th>
-              <th scope="col" className="py-3 md:px-5 px-2 w-3/12">
+              <th scope="col" className="py-3 md:px-5 px-2 w-2/12">
                 Bunyi Reklame
               </th>
               <th scope="col" className="py-3 md:px-5 px-2 w-3/12">
@@ -34,6 +35,9 @@ const DetailListReklame = ({ data }: ListReklameProps) => {
               <th scope="col" className="py-3 md:px-5 px-2 w-2/12">
                 Akhir Pemasangan
               </th>
+              <th scope="col" className="py-3 md:px-5 px-2 w-2/12">
+                Titik Koordinat
+              </th>
             </tr>
           </thead>
           <tbody className="overflow-y-auto overflow-x-auto font-medium text-center">
@@ -41,14 +45,14 @@ const DetailListReklame = ({ data }: ListReklameProps) => {
               <tr key={n} className="bg-white border-t dark:bg-gray-800">
                 <th
                   scope="row"
-                  className="py-4 md:px-5 px-2 w-2/12 font-medium text-gray-900 whitespace-nowrap"
+                  className="py-4 md:px-5 px-2 w-1/12 font-medium text-gray-900 whitespace-nowrap"
                 >
                   {n + 1}
                 </th>
                 <td className="py-4 md:px-5 px-2 w-2/12">
                   {i.detail[1].value}
                 </td>
-                <td className="py-4 md:px-5 px-2 w-3/12">
+                <td className="py-4 md:px-5 px-2 w-2/12">
                   {i.detail[0].value}
                 </td>
                 <td className="py-4 md:px-5 px-2 w-3/12">
@@ -56,6 +60,20 @@ const DetailListReklame = ({ data }: ListReklameProps) => {
                 </td>
                 <td className="py-4 md:px-5 px-2 w-2/12">
                   {i.detail[8].value}
+                </td>
+                <td className="py-4 md:px-5 px-2 w-2/12">
+                  <div className="flex gap-3 items-center justify-center">
+                    {i.detail[10].value}
+                    <TiLocationArrow
+                      className="text-3xl cursor-pointer hover:text-primary"
+                      onClick={() =>
+                        window.open(
+                          `http://maps.google.com?q=${i.detail[10].value}`,
+                          "_blank"
+                        )
+                      }
+                    />
+                  </div>
                 </td>
               </tr>
             ))}

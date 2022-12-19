@@ -9,6 +9,7 @@ import ConfirmModal from "../components/layouts/ConfirmModal";
 import MutateReklameModal from "../components/EditForm/MutateReklameModal";
 import FormEditRegister from "../components/EditForm/FormEditRegistrasi";
 import customFetch from "../utils/customFetch";
+import Alert from "../components/layouts/Alert";
 
 const EditForm = () => {
   const [showModal, setShowModal] = useState(false);
@@ -28,6 +29,7 @@ const EditForm = () => {
   const [reklameList, setReklameList] = useState([]);
 
   const [changes, setChanges] = useState(0);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const { id } = useParams();
 
@@ -46,23 +48,30 @@ const EditForm = () => {
     }
   }, [id, changes]);
 
-  const handleRegister = async () => {
-    const body = {
-      nama_reg,
-      nik_reg,
-      npwp_reg,
-      nama_perusahaan,
-      alamat_perusahaan,
-      no_telp,
-      expired_date,
-    };
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (nik_reg.length !== 16) {
+      setAlertMessage("Data NIK Pemohon Tidak Sesuai");
+    } else if (npwp_reg.length !== 15 && npwp_reg.length !== 16) {
+      setAlertMessage("Data NPWP Pemohon Tidak Sesuai");
+    } else {
+      const body = {
+        nama_reg,
+        nik_reg,
+        npwp_reg,
+        nama_perusahaan,
+        alamat_perusahaan,
+        no_telp,
+        expired_date,
+      };
 
-    const res = await dataMutation(
-      "/api/reklame/update-registrasi/" + id,
-      body,
-      "PUT"
-    );
-    console.log(res);
+      const res = await dataMutation(
+        "/api/reklame/update-registrasi/" + id,
+        body,
+        "PUT"
+      );
+      console.log(res);
+    }
   };
 
   return (
@@ -76,6 +85,7 @@ const EditForm = () => {
 
       {/* Form Register */}
       <FormEditRegister
+        handleRegister={handleRegister}
         no_reg={no_reg}
         setNo_reg={setNo_reg}
         alamat_perusahaan={alamat_perusahaan}
@@ -95,11 +105,14 @@ const EditForm = () => {
       />
 
       <div className="flex justify-end mx-7 gap-7">
-        <button className="bg-white border border-primary mb-5 font-semibold flex justify-center items-center gap-3 text-primary rounded-md w-40 h-12">
-          <span>Batal</span>
-        </button>
+        <Link to={"/pendataan"}>
+          <button className="bg-white border border-primary mb-5 font-semibold flex justify-center items-center gap-3 text-primary rounded-md w-40 h-12">
+            <span>Batal</span>
+          </button>
+        </Link>
         <button
-          onClick={() => setShowConfirmModal(true)}
+          type="submit"
+          form="registerForm"
           className="bg-primary mb-5 font-semibold flex justify-center items-center gap-3 text-white rounded-md w-40 h-12"
         >
           <span>Simpan</span>
@@ -117,6 +130,9 @@ const EditForm = () => {
       />
 
       {/* Insert Reklame Modal */}
+      {alertMessage && (
+        <Alert alertMessage={alertMessage} setAlertMessage={setAlertMessage} />
+      )}
 
       <ReklameModal
         id_register={parseInt(id!)}

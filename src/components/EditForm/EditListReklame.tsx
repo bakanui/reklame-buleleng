@@ -84,21 +84,25 @@ const EditListReklame = ({
                 <td className="py-4 md:px-5 px-2 w-2/12">
                   {i.detail[8].value}
                 </td>
-                <td className="py-4 md:px-5 px-2 w-1/12 relative">
-                  <button>
-                    <BsThreeDots
-                      onClickCapture={() => setShowReklameModal(i.id!)}
-                      className="text-2xl hover:text-primary"
-                    />
-                  </button>
-                  <div className="top-0 right-0 absolute">
-                    <ReklameEditModal
-                      setShowMutateReklameModal={setShowMutateReklameModal}
-                      reklame_id={i.id!}
-                      setShowModal={setShowReklameModal}
-                      showModal={showReklameModal}
-                      setChanges={setChanges}
-                    />
+                <td className="py-2 md:px-5 px-2 w-1/12 relative">
+                  <div className="flex items-center justify-center">
+                    <div className="md:relative top-0">
+                      <ReklameEditModal
+                        setShowMutateReklameModal={setShowMutateReklameModal}
+                        reklame_id={i.id!}
+                        setShowModal={setShowReklameModal}
+                        showModal={showReklameModal}
+                        setChanges={setChanges}
+                      />
+                    </div>
+                    {showReklameModal !== i.id && (
+                      <button>
+                        <BsThreeDots
+                          onClickCapture={() => setShowReklameModal(i.id!)}
+                          className={`text-2xl hover:text-primary`}
+                        />
+                      </button>
+                    )}
                   </div>
                 </td>
               </tr>

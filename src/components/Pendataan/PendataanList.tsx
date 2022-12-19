@@ -68,20 +68,22 @@ const PendataanList = ({
           </p>
         )}
       </td>
-      <td className="py-3 md:px-5 px-2 w-1/12">
-        <BsThreeDots
-          className="w-full hover:text-primary text-2xl"
-          onClickCapture={() => setShowModal(i.id!)}
-        />
-        <div className="md:right-12 md:absolute z-50">
-          <OptionModal
-            registration_id={i.id_registrasi!}
-            reklame_id={i.id!}
-            setShowModal={setShowModal}
-            showModal={showModal}
-            setShowConfirmDeleteModal={setShowConfirmDeleteModal}
-            showConfirmDeleteModal={showConfirmDeleteModal}
+      <td className="py-1 md:px-5 px-2 w-1/12 relative">
+        <div className="flex items-center">
+          <BsThreeDots
+            className="w-full hover:text-primary text-2xl"
+            onClickCapture={() => setShowModal(i.id!)}
           />
+          <div className="md:relative top-0">
+            <OptionModal
+              coordinate={i.titik_koordinat}
+              registration_id={i.id_registrasi!}
+              reklame_id={i.id!}
+              setShowModal={setShowModal}
+              showModal={showModal}
+              setShowConfirmDeleteModal={setShowConfirmDeleteModal}
+            />
+          </div>
         </div>
       </td>
       {showConfirmDeleteModal && (

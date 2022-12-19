@@ -109,4 +109,5 @@ export interface ReklameType {
   jenis_reklame: string;
   status: string;
   tgl_akhir: string;
+  titik_koordinat: string;
 }

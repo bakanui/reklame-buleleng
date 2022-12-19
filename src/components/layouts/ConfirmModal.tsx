@@ -1,5 +1,5 @@
 interface ConfirmModalProps {
-  handleSubmit: () => Promise<void>;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   setShowConfirmModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -58,11 +58,11 @@ const ConfirmModal = ({
             </h3>
             <button
               onClick={() => {
-                handleSubmit();
                 setShowConfirmModal(false);
               }}
               data-modal-toggle="popup-modal"
-              type="button"
+              type="submit"
+              form="registerForm"
               className="text-white text-center bg-primary w-32 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center justify-center px-5 py-2.5 mr-2"
             >
               Sudah

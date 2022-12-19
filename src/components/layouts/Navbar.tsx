@@ -27,7 +27,7 @@ const Navbar = ({ setShowSidebar }: NavbarProps) => {
   };
 
   return (
-    <nav className="px-5 bg-white border-gray-200 shadow-lg">
+    <nav className="px-5 bg-white border-gray-200 shadow-lg w-full">
       <div className="flex flex-wrap justify-between items-center mx-auto">
         <button
           onClick={() => setShowSidebar((current) => !current)}

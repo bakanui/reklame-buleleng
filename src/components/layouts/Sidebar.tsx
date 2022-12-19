@@ -1,5 +1,5 @@
 import { TbEdit } from "react-icons/tb";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 interface SidebarProps {
   showSidebar: boolean;
@@ -13,26 +13,26 @@ const Sidebar = ({ showSidebar }: SidebarProps) => {
       className={`md:w-[22vw] w-[70vw] ${!showSidebar && "hidden"}`}
       aria-label="Sidebar"
     >
-      <div className="overflow-y-auto py-4 md:px-7 bg-primary rounded h-full min-h-screen text-white">
-        <Link to="/" className="flex items-center pl-2.5 md:mb-12 mb-5">
+      <div className="overflow-y-auto py-4 md:px-5 sticky top-0 bg-primary rounded h-screen text-white">
+        <a href="/" className="flex items-center pl-2.5 md:mb-12 mb-5">
           <img
             src={`/logo.png`}
-            className="mr-3 md:w-16 md:h-16 w-10 h-10"
+            className="mr-3 md:w-10 md:h-10 w-10 h-10"
             alt="BulelengLogo"
           />
           <div className="hidden md:block">
-            <p className="self-center md:text-xl font-semibold whitespace-nowrap">
+            <p className="self-center md:text-base font-semibold whitespace-nowrap">
               Pendataan Reklame
             </p>
-            <p className="self-center md:text-md font-semibold whitespace-nowrap">
+            <p className="self-center md:text-sm font-semibold whitespace-nowrap">
               Kabupaten Buleleng
             </p>
           </div>
-        </Link>
+        </a>
         <ul className="space-y-2">
           <li>
-            <Link
-              to="/"
+            <a
+              href="/"
               className={`${
                 location.pathname === "/" && "bg-secondary text-primary"
               } flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:text-primary hover:bg-secondary`}
@@ -47,18 +47,18 @@ const Sidebar = ({ showSidebar }: SidebarProps) => {
                 <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
               </svg>
               <span className="ml-3">Dashboard</span>
-            </Link>
+            </a>
           </li>
           <li>
-            <Link
-              to="/pendataan"
+            <a
+              href="/pendataan"
               className={`${
                 location.pathname !== "/" && "bg-secondary text-primary"
               } flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:text-primary hover:bg-secondary`}
             >
               <TbEdit className="text-2xl" />
               <span className="ml-3">Pendataan</span>
-            </Link>
+            </a>
           </li>
         </ul>
       </div>

@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import dataMutation from "../utils/dataMutation";
 const Login = () => {
   const [email, setEmail] = useState("gusdika58@gmail.com");
   const [password, setPassword] = useState("secret");
-  const navigate = useNavigate();
 
   const handleLogin = () => {
     const body = {
@@ -13,8 +11,13 @@ const Login = () => {
     };
     dataMutation("/api/login", body, "POST").then((res) => {
       console.log(res.access_token);
-      localStorage.setItem("access_token", res.access_token);
-      navigate("/");
+      if (res.access_token) {
+        localStorage.setItem("access_token", res.access_token);
+
+        window.location.href = "/";
+      } else {
+        alert("Authentication Failed");
+      }
     });
   };
 

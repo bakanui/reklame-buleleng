@@ -27,13 +27,13 @@ const OptionModal = ({
       aria-hidden="true"
       className={`${
         showModal !== reklame_id && "hidden"
-      }  overflow-x-hidden z-50 md:relative right-0 top-3/4`}
+      }  overflow-x-hidden z-50`}
     >
       <div
         onClickCapture={() => setShowModal(0)}
         className="relative p-1 flex justify-end text-base font-medium"
       >
-        <div className="relative bg-secondary shadow-md w-48 pl-3 pt-2 h-28 rounded dark:bg-gray-700">
+        <div className=" bg-secondary shadow-md w-48 pl-3 pt-2 h-28 rounded dark:bg-gray-700">
           <div
             onClick={() => navigate("/edit/" + registration_id)}
             className="flex gap-5 items-center mt-2 hover:bg-grey cursor-pointer"

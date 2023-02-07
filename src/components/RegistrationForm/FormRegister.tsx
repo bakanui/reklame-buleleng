@@ -37,7 +37,6 @@ const FormRegister = ({
             Nama Pemohon
           </label>
           <input
-            required
             onChange={(e) => setNama_reg(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
             type="text"
@@ -49,7 +48,6 @@ const FormRegister = ({
             Nik
           </label>
           <input
-            required
             onChange={(e) => setNik_reg(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
             type="number"
@@ -61,7 +59,6 @@ const FormRegister = ({
             NPWP
           </label>
           <input
-            required
             onChange={(e) => setNpwp_reg(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
             type="number"
@@ -73,7 +70,6 @@ const FormRegister = ({
             Nama Perusahaan
           </label>
           <input
-            required
             onChange={(e) => setNama_perusahaan(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
             type="text"
@@ -85,7 +81,6 @@ const FormRegister = ({
             Alamat Perusahaan
           </label>
           <input
-            required
             onChange={(e) => setAlamat_perusahaan(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
             type="text"
@@ -97,7 +92,6 @@ const FormRegister = ({
             Nomor Telp/HP
           </label>
           <input
-            required
             onChange={(e) => setNo_telp(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
             type="number"

@@ -45,7 +45,6 @@ const FormEditRegister = ({
             Nomor Registrasi
           </label>
           <input
-            required
             value={no_reg}
             readOnly
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -58,7 +57,6 @@ const FormEditRegister = ({
             Nama Pemohon
           </label>
           <input
-            required
             value={nama_reg}
             onChange={(e) => setNama_reg(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -71,7 +69,6 @@ const FormEditRegister = ({
             Nik
           </label>
           <input
-            required
             value={nik_reg}
             onChange={(e) => setNik_reg(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -84,7 +81,6 @@ const FormEditRegister = ({
             NPWP
           </label>
           <input
-            required
             value={npwp_reg}
             onChange={(e) => setNpwp_reg(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -97,7 +93,6 @@ const FormEditRegister = ({
             Nama Perusahaan
           </label>
           <input
-            required
             value={nama_perusahaan}
             onChange={(e) => setNama_perusahaan(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -110,7 +105,6 @@ const FormEditRegister = ({
             Alamat Perusahaan
           </label>
           <input
-            required
             value={alamat_perusahaan}
             onChange={(e) => setAlamat_perusahaan(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -123,7 +117,6 @@ const FormEditRegister = ({
             Nomor Telp/HP
           </label>
           <input
-            required
             value={no_telp}
             onChange={(e) => setNo_telp(e.target.value)}
             className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"

@@ -35,7 +35,7 @@ const ReklameEditModal = ({
       aria-hidden="true"
       className={`${
         showModal !== reklame_id && "hidden"
-      }  overflow-y-auto overflow-x-hidden z-50 md:relative w-full`}
+      }  overflow-y-auto overflow-x-hidden z-50 w-full`}
     >
       <div
         onClickCapture={() => setShowModal(reklame_id)}

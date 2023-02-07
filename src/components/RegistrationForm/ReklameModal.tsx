@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import dataMutation from "../../utils/dataMutation";
 import Alert from "../layouts/Alert";
 import CoordinateMaps from "./CoordinateMaps";
+import { log } from "console";
+import uploadImage from "../../utils/uploadImage";
 
 interface ReklameModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,6 +29,7 @@ const ReklameModal = ({
   const [tgl_akhir, setTgl_akhir] = useState("");
   const [tempat_pemasangan, setTempat_pemasangan] = useState("");
   const [titik_koordinat, setTitik_koordinat] = useState("");
+  const [reklameImage, setreklameImage] = useState<FileList | null>(null);
 
   const [alertMessage, setAlertMessage] = useState("");
 
@@ -46,100 +49,116 @@ const ReklameModal = ({
 
   const handleAddReklame = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (
-      area_pemasangan &&
-      bunyi_reklame &&
-      jenis_reklame &&
-      panjang_reklame &&
-      lebar_reklame &&
-      titik_koordinat &&
-      tgl_mulai &&
-      tgl_akhir
-    ) {
-      const body = {
-        id_reg: id_register,
-        detailForm: [
-          {
-            label: "Bunyi Reklame",
-            form_type: 1,
-            kode_isian: "BUNYI_REKLAME",
-            value: bunyi_reklame,
-          },
-          {
-            label: "Jenis Reklame",
-            form_type: 1,
-            kode_isian: "JENIS_REKLAME",
-            value: jenis_reklame,
-          },
-          {
-            label: "Area Pemasangan",
-            form_type: 1,
-            kode_isian: "AREA_PEMASANGAN",
-            value: area_pemasangan,
-          },
-          {
-            label: "Panjang Reklame",
-            form_type: 1,
-            kode_isian: "PANJANG_REKLAME",
-            value: panjang_reklame,
-          },
-          {
-            label: "Lebar Reklame",
-            form_type: 1,
-            kode_isian: "LEBAR_REKLAME",
-            value: lebar_reklame,
-          },
-          {
-            label: "Jumlah Muka Reklame",
-            form_type: 1,
-            kode_isian: "JUMLAH_MUKA",
-            value: jumlah_muka,
-          },
-          {
-            label: "Lama Pemasangan",
-            form_type: 1,
-            kode_isian: "LAMA_PEMASANGAN",
-            value: lama_pemasangan,
-          },
-          {
-            label: "Tanggal Mulai Pemasangan",
-            form_type: 1,
-            kode_isian: "TGL_MULAI",
-            value: tgl_mulai,
-          },
-          {
-            label: "Tanggal Akhir Pemasangan",
-            form_type: 1,
-            kode_isian: "TGL_AKHIR",
-            value: tgl_akhir,
-          },
-          {
-            label: "Tempat Pemasangan",
-            form_type: 1,
-            kode_isian: "TEMPAT_PEMASANGAN",
-            value: tempat_pemasangan,
-          },
-          {
-            label: "Titik Koordinat Pemasangan",
-            form_type: 1,
-            kode_isian: "TITIK_KOORDINAT",
-            value: titik_koordinat,
-          },
-        ],
-      };
+    // if (
+    //   area_pemasangan &&
+    //   bunyi_reklame &&
+    //   jenis_reklame &&
+    //   panjang_reklame &&
+    //   lebar_reklame &&
+    //   titik_koordinat &&
+    //   tgl_mulai &&
+    //   tgl_akhir
+    // ) {
 
-      setShowModal(false);
-      await dataMutation("/api/reklame/add-reklame", body, "POST").then(
-        (res) => {
-          setChanges((current) => current + 1);
-          console.log(res);
-          handleClearForm();
+    // } else {
+    //   alert("Invalid Form");
+    // }
+
+    const body = {
+      id_reg: id_register,
+      detailForm: [
+        {
+          label: "Bunyi Reklame",
+          form_type: 1,
+          kode_isian: "BUNYI_REKLAME",
+          value: bunyi_reklame,
+        },
+        {
+          label: "Jenis Reklame",
+          form_type: 1,
+          kode_isian: "JENIS_REKLAME",
+          value: jenis_reklame,
+        },
+        {
+          label: "Area Pemasangan",
+          form_type: 1,
+          kode_isian: "AREA_PEMASANGAN",
+          value: area_pemasangan,
+        },
+        {
+          label: "Panjang Reklame",
+          form_type: 1,
+          kode_isian: "PANJANG_REKLAME",
+          value: panjang_reklame,
+        },
+        {
+          label: "Lebar Reklame",
+          form_type: 1,
+          kode_isian: "LEBAR_REKLAME",
+          value: lebar_reklame,
+        },
+        {
+          label: "Jumlah Muka Reklame",
+          form_type: 1,
+          kode_isian: "JUMLAH_MUKA",
+          value: jumlah_muka,
+        },
+        {
+          label: "Lama Pemasangan",
+          form_type: 1,
+          kode_isian: "LAMA_PEMASANGAN",
+          value: lama_pemasangan,
+        },
+        {
+          label: "Tanggal Mulai Pemasangan",
+          form_type: 1,
+          kode_isian: "TGL_MULAI",
+          value: tgl_mulai,
+        },
+        {
+          label: "Tanggal Akhir Pemasangan",
+          form_type: 1,
+          kode_isian: "TGL_AKHIR",
+          value: tgl_akhir,
+        },
+        {
+          label: "Tempat Pemasangan",
+          form_type: 1,
+          kode_isian: "TEMPAT_PEMASANGAN",
+          value: tempat_pemasangan,
+        },
+        {
+          label: "Titik Koordinat Pemasangan",
+          form_type: 1,
+          kode_isian: "TITIK_KOORDINAT",
+          value: titik_koordinat,
+        },
+      ],
+    };
+
+    setShowModal(false);
+    await dataMutation("/api/reklame/add-reklame", body, "POST").then((res) => {
+      setChanges((current) => current + 1);
+      if (reklameImage !== null) {
+        if (reklameImage[0].name) {
+          uploadReklameImage(reklameImage[0], res.data[0].id);
         }
-      );
-    } else {
-      alert("Invalid Form");
-    }
+      }
+      handleClearForm();
+    });
   };
+
+  async function uploadReklameImage(imageData: File, id: number) {
+    console.log(id);
+
+    const data = new FormData();
+    data.append("id_permohonan", `${id}`);
+    data.append("image", imageData);
+
+    await uploadImage("/api/permohonan/upload-extraimg", data).then((res) =>
+      console.log(res)
+    );
+  }
 
   useEffect(() => {
     if (tgl_mulai && tgl_akhir) {
@@ -205,7 +224,6 @@ const ReklameModal = ({
                   Bunyi Reklame
                 </label>
                 <textarea
-                  required
                   value={bunyi_reklame}
                   onChange={(e) => setBunyi_reklame(e.target.value)}
                   placeholder="Masukan bunyi reklame..."
@@ -256,7 +274,6 @@ const ReklameModal = ({
                   Panjang Reklame
                 </label>
                 <input
-                  required
                   value={panjang_reklame}
                   onChange={(e) => setPanjang_reklame(e.target.value)}
                   className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -269,7 +286,6 @@ const ReklameModal = ({
                   Lebar Reklame
                 </label>
                 <input
-                  required
                   value={lebar_reklame}
                   onChange={(e) => setLebar_reklame(e.target.value)}
                   className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -282,7 +298,6 @@ const ReklameModal = ({
                   Jumlah Muka Reklame
                 </label>
                 <input
-                  required
                   value={jumlah_muka}
                   onChange={(e) => setjumlah_muka(e.target.value)}
                   className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -295,7 +310,6 @@ const ReklameModal = ({
                   Tanggal Mulai Pemasangan
                 </label>
                 <input
-                  required
                   value={tgl_mulai}
                   onChange={(e) => setTgl_mulai(e.target.value)}
                   className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -308,7 +322,6 @@ const ReklameModal = ({
                   Tanggal Akhir Pemasangan
                 </label>
                 <input
-                  required
                   value={tgl_akhir}
                   onChange={(e) => setTgl_akhir(e.target.value)}
                   className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -321,7 +334,6 @@ const ReklameModal = ({
                   Lama Pemasangan
                 </label>
                 <input
-                  required
                   value={lama_pemasangan}
                   onChange={(e) => setLama_pemasangan(e.target.value)}
                   className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -334,7 +346,6 @@ const ReklameModal = ({
                   Tempat Pemasangan
                 </label>
                 <input
-                  required
                   value={tempat_pemasangan}
                   onChange={(e) => setTempat_pemasangan(e.target.value)}
                   className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"
@@ -344,10 +355,20 @@ const ReklameModal = ({
               </div>
               <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
                 <label className="md:w-52 w-full" htmlFor="no-registrasi">
+                  Gambar Reklame
+                </label>
+                <input
+                  onChange={(e) => setreklameImage(e.target.files)}
+                  className=" w-full hover:bg-secondary rounded-md"
+                  type="file"
+                  placeholder="Masukan Gambar Reklame..."
+                />
+              </div>
+              <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
+                <label className="md:w-52 w-full" htmlFor="no-registrasi">
                   Titik Koordinat Pemasangan
                 </label>
                 <input
-                  required
                   value={titik_koordinat}
                   onChange={(e) => setTitik_koordinat(e.target.value)}
                   className="w-full hover:bg-secondary rounded-md border px-7 h-12 border-grey"

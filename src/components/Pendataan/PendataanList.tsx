@@ -68,13 +68,13 @@ const PendataanList = ({
           </p>
         )}
       </td>
-      <td className="py-1 md:px-5 px-2 w-1/12 relative">
+      <td className="py-1 md:px-5 px-2 w-1/12">
         <div className="flex items-center">
           <BsThreeDots
             className="w-full hover:text-primary text-2xl"
             onClickCapture={() => setShowModal(i.id!)}
           />
-          <div className="md:relative top-0">
+          <div className="relative">
             <OptionModal
               coordinate={i.titik_koordinat}
               registration_id={i.id_registrasi!}

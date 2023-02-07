@@ -16,6 +16,7 @@ export interface DataRegisterType {
 
 export interface ReklameDetailType {
   id?: number;
+  images?: Array<{}>;
   detail: [
     {
       id?: number;

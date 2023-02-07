@@ -24,7 +24,7 @@ const EditListReklame = ({
   setChanges,
 }: ListReklameProps) => {
   return (
-    <div className="bg-white shadow-md rounded-md mx-7 px-6 my-7 pt-5 font-medium">
+    <div className="bg-white shadow-md rounded-md mx-7 px-6 my-7 pt-5 font-medium min-h-[30vh]">
       <button
         onClick={() => setShowModal(true)}
         className="bg-primary mb-5 font-semibold flex justify-center items-center gap-3 text-white rounded-md w-52 h-12"
@@ -84,9 +84,9 @@ const EditListReklame = ({
                 <td className="py-4 md:px-5 px-2 w-2/12">
                   {i.detail[8].value}
                 </td>
-                <td className="py-2 md:px-5 px-2 w-1/12 relative">
+                <td className="py-2 md:px-5 px-2 w-1/12">
                   <div className="flex items-center justify-center">
-                    <div className="md:relative top-0">
+                    <div className="">
                       <ReklameEditModal
                         setShowMutateReklameModal={setShowMutateReklameModal}
                         reklame_id={i.id!}

@@ -4,6 +4,7 @@ import { ReklameDetailType } from "../../utils/dataInterface";
 import dataMutation from "../../utils/dataMutation";
 import Alert from "../layouts/Alert";
 import CoordinateMaps from "../RegistrationForm/CoordinateMaps";
+import uploadImage from "../../utils/uploadImage";
 
 interface ReklameModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -74,6 +75,7 @@ const MutateReklameModal = ({
           value: currentData.detail[10].value,
           id: currentData.detail[10].id!,
         });
+        setReklameUplodedImages(currentData.images as []);
       });
     }
   }, [reklame_id]);
@@ -87,122 +89,146 @@ const MutateReklameModal = ({
   const [lama_pemasangan, setLama_pemasangan] = useState({ id: 0, value: "" });
   const [tgl_mulai, setTgl_mulai] = useState({ id: 0, value: "" });
   const [tgl_akhir, setTgl_akhir] = useState({ id: 0, value: "" });
+  const [reklameUplodedImage, setReklameUplodedImages] = useState<Array<any>>(
+    []
+  );
   const [titik_koordinat, setTitik_koordinat] = useState({ id: 0, value: "" });
   const [tempat_pemasangan, setTempat_pemasangan] = useState({
     id: 0,
     value: "",
   });
+  const [reklameImage, setreklameImage] = useState<FileList | null>(null);
 
   const [alertMessage, setAlertMessage] = useState("");
 
+  console.log(titik_koordinat.value);
+
   const handleAddReklame = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (
-      area_pemasangan &&
-      bunyi_reklame &&
-      jenis_reklame &&
-      panjang_reklame &&
-      lebar_reklame &&
-      titik_koordinat &&
-      tgl_mulai &&
-      tgl_akhir
-    ) {
-      const body: ReklameBodyType = {
-        id_reg: 3,
-        detailForm: [
-          {
-            id: bunyi_reklame.id,
-            label: "Bunyi Reklame",
-            form_type: 1,
-            kode_isian: "BUNYI_REKLAME",
-            value: bunyi_reklame.value,
-          },
-          {
-            id: jenis_reklame.id,
-            label: "Jenis Reklame",
-            form_type: 1,
-            kode_isian: "JENIS_REKLAME",
-            value: jenis_reklame.value,
-          },
-          {
-            id: area_pemasangan.id,
-            label: "Area Pemasangan",
-            form_type: 1,
-            kode_isian: "AREA_PEMASANGAN",
-            value: area_pemasangan.value,
-          },
-          {
-            id: panjang_reklame.id,
-            label: "Panjang Reklame",
-            form_type: 1,
-            kode_isian: "PANJANG_REKLAME",
-            value: panjang_reklame.value,
-          },
-          {
-            id: lebar_reklame.id,
-            label: "Lebar Reklame",
-            form_type: 1,
-            kode_isian: "LEBAR_REKLAME",
-            value: lebar_reklame.value,
-          },
-          {
-            id: jumlah_muka.id,
-            label: "Jumlah Muka Reklame",
-            form_type: 1,
-            kode_isian: "JUMLAH_MUKA",
-            value: jumlah_muka.value,
-          },
-          {
-            id: lama_pemasangan.id,
-            label: "Lama Pemasangan",
-            form_type: 1,
-            kode_isian: "LAMA_PEMASANGAN",
-            value: lama_pemasangan.value,
-          },
-          {
-            id: tgl_mulai.id,
-            label: "Tanggal Mulai Pemasangan",
-            form_type: 1,
-            kode_isian: "TGL_MULAI",
-            value: tgl_mulai.value,
-          },
-          {
-            id: tgl_akhir.id,
-            label: "Tanggal Akhir Pemasangan",
-            form_type: 1,
-            kode_isian: "TGL_AKHIR",
-            value: tgl_akhir.value,
-          },
-          {
-            id: tempat_pemasangan.id,
-            label: "Tempat Pemasangan",
-            form_type: 1,
-            kode_isian: "TEMPAT_PEMASANGAN",
-            value: tempat_pemasangan.value,
-          },
-          {
-            id: titik_koordinat.id,
-            label: "Titik Koordinat Pemasangan",
-            form_type: 1,
-            kode_isian: "TITIK_KOORDINAT",
-            value: titik_koordinat.value,
-          },
-        ],
-      };
+    // if (
+    //   area_pemasangan &&
+    //   bunyi_reklame &&
+    //   jenis_reklame &&
+    //   panjang_reklame &&
+    //   lebar_reklame &&
+    //   titik_koordinat &&
+    //   tgl_mulai &&
+    //   tgl_akhir
+    // ) {
 
-      setShowModal(false);
-      await dataMutation(
-        "/api/reklame/update-reklame/" + reklame_id,
-        body,
-        "PUT"
-      ).then((res) => {
-        console.log(res);
-        setChanges((current) => current + 1);
-      });
-    } else {
-      alert("Invalid Form");
-    }
+    // } else {
+    //   alert("Invalid Form");
+    // }
+    const body: ReklameBodyType = {
+      id_reg: 3,
+      detailForm: [
+        {
+          id: bunyi_reklame.id,
+          label: "Bunyi Reklame",
+          form_type: 1,
+          kode_isian: "BUNYI_REKLAME",
+          value: bunyi_reklame.value,
+        },
+        {
+          id: jenis_reklame.id,
+          label: "Jenis Reklame",
+          form_type: 1,
+          kode_isian: "JENIS_REKLAME",
+          value: jenis_reklame.value,
+        },
+        {
+          id: area_pemasangan.id,
+          label: "Area Pemasangan",
+          form_type: 1,
+          kode_isian: "AREA_PEMASANGAN",
+          value: area_pemasangan.value,
+        },
+        {
+          id: panjang_reklame.id,
+          label: "Panjang Reklame",
+          form_type: 1,
+          kode_isian: "PANJANG_REKLAME",
+          value: panjang_reklame.value,
+        },
+        {
+          id: lebar_reklame.id,
+          label: "Lebar Reklame",
+          form_type: 1,
+          kode_isian: "LEBAR_REKLAME",
+          value: lebar_reklame.value,
+        },
+        {
+          id: jumlah_muka.id,
+          label: "Jumlah Muka Reklame",
+          form_type: 1,
+          kode_isian: "JUMLAH_MUKA",
+          value: jumlah_muka.value,
+        },
+        {
+          id: lama_pemasangan.id,
+          label: "Lama Pemasangan",
+          form_type: 1,
+          kode_isian: "LAMA_PEMASANGAN",
+          value: lama_pemasangan.value,
+        },
+        {
+          id: tgl_mulai.id,
+          label: "Tanggal Mulai Pemasangan",
+          form_type: 1,
+          kode_isian: "TGL_MULAI",
+          value: tgl_mulai.value,
+        },
+        {
+          id: tgl_akhir.id,
+          label: "Tanggal Akhir Pemasangan",
+          form_type: 1,
+          kode_isian: "TGL_AKHIR",
+          value: tgl_akhir.value,
+        },
+        {
+          id: tempat_pemasangan.id,
+          label: "Tempat Pemasangan",
+          form_type: 1,
+          kode_isian: "TEMPAT_PEMASANGAN",
+          value: tempat_pemasangan.value,
+        },
+        {
+          id: titik_koordinat.id,
+          label: "Titik Koordinat Pemasangan",
+          form_type: 1,
+          kode_isian: "TITIK_KOORDINAT",
+          value: titik_koordinat.value,
+        },
+      ],
+    };
+
+    setShowModal(false);
+    await dataMutation(
+      "/api/reklame/update-reklame/" + reklame_id,
+      body,
+      "PUT"
+    ).then((res) => {
+      console.log(res);
+      setChanges((current) => current + 1);
+      if (reklameImage !== null) {
+        if (reklameImage[0].name) {
+          uploadReklameImage(reklameImage[0]);
+        }
+      }
+    });
   };
+
+  async function uploadReklameImage(imageData: File) {
+    console.log(reklame_id);
+
+    const data = new FormData();
+    data.append("id_permohonan", `${reklame_id}`);
+    data.append("image", imageData);
+
+    await uploadImage("/api/permohonan/upload-extraimg", data).then((res) =>
+      console.log(res)
+    );
+  }
 
   useEffect(() => {
     if (tgl_mulai.value && tgl_akhir.value) {
@@ -273,7 +299,6 @@ const MutateReklameModal = ({
                   Bunyi Reklame
                 </label>
                 <textarea
-                  required
                   onChange={(e) =>
                     setBunyi_reklame((current) => ({
                       id: current.id,
@@ -339,7 +364,6 @@ const MutateReklameModal = ({
                   Panjang Reklame
                 </label>
                 <input
-                  required
                   value={panjang_reklame.value}
                   onChange={(e) =>
                     setPanjang_reklame((current) => ({
@@ -357,7 +381,6 @@ const MutateReklameModal = ({
                   Lebar Reklame
                 </label>
                 <input
-                  required
                   value={lebar_reklame.value}
                   onChange={(e) =>
                     setLebar_reklame((current) => ({
@@ -375,7 +398,6 @@ const MutateReklameModal = ({
                   Jumlah Muka Reklame
                 </label>
                 <input
-                  required
                   value={jumlah_muka.value}
                   onChange={(e) =>
                     setJumlah_muka((current) => ({
@@ -393,7 +415,6 @@ const MutateReklameModal = ({
                   Tanggal Mulai Pemasangan
                 </label>
                 <input
-                  required
                   value={tgl_mulai.value}
                   onChange={(e) =>
                     setTgl_mulai((current) => ({
@@ -411,7 +432,6 @@ const MutateReklameModal = ({
                   Tanggal Akhir Pemasangan
                 </label>
                 <input
-                  required
                   value={tgl_akhir.value}
                   onChange={(e) =>
                     setTgl_akhir((current) => ({
@@ -429,7 +449,6 @@ const MutateReklameModal = ({
                   Lama Pemasangan
                 </label>
                 <input
-                  required
                   value={lama_pemasangan.value}
                   onChange={(e) =>
                     setLama_pemasangan((current) => ({
@@ -447,7 +466,6 @@ const MutateReklameModal = ({
                   Tempat Pemasangan
                 </label>
                 <input
-                  required
                   value={tempat_pemasangan.value}
                   onChange={(e) =>
                     setTempat_pemasangan((current) => ({
@@ -460,12 +478,33 @@ const MutateReklameModal = ({
                   placeholder="Masukan tempat pemasangan reklame..."
                 />
               </div>
+              <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-start pb-7">
+                <label className="md:w-52 w-full" htmlFor="no-registrasi">
+                  Gambar Reklame
+                </label>
+                <input
+                  onChange={(e) => setreklameImage(e.target.files)}
+                  className=" w-full hover:bg-secondary rounded-md"
+                  type="file"
+                  placeholder="Masukan Gambar Reklame..."
+                />
+                {reklameUplodedImage?.length && (
+                  <button className="w-52 bg-primary py-2 px-3 rounded-md">
+                    <a
+                      href={`${reklameUplodedImage[0].img_path}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Download Gambar
+                    </a>
+                  </button>
+                )}
+              </div>
               <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
                 <label className="md:w-52 w-full" htmlFor="no-registrasi">
                   Titik Koordinat Pemasangan
                 </label>
                 <input
-                  required
                   value={titik_koordinat.value}
                   onChange={(e) =>
                     setTitik_koordinat((current) => ({
@@ -481,7 +520,7 @@ const MutateReklameModal = ({
             </form>
             <CoordinateMaps
               editTitikKoordinat={setTitik_koordinat}
-              titik_koordinat={titik_koordinat.value}
+              titik_koordinat={titik_koordinat.value || "-8.24999, 114.95"}
             />
           </div>
 

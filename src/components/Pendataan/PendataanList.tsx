@@ -74,7 +74,7 @@ const PendataanList = ({
             className="w-full hover:text-primary text-2xl"
             onClickCapture={() => setShowModal(i.id!)}
           />
-          <div className="relative">
+          <div className="">
             <OptionModal
               coordinate={i.titik_koordinat}
               registration_id={i.id_registrasi!}

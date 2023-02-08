@@ -41,7 +41,7 @@ const ReklameEditModal = ({
         onClickCapture={() => setShowModal(reklame_id)}
         className="p-1 flex justify-center text-lg font-medium h-min"
       >
-        <div className=" bg-secondary shadow-md w-40 pl-3 pt-2 h-24 rounded dark:bg-gray-700">
+        <div className=" bg-secondary absolute right-32 shadow-md w-40 pl-3 pt-2 h-24 rounded dark:bg-gray-700">
           <div
             onClickCapture={() => setShowMutateReklameModal(true)}
             className="flex gap-5 items-center mt-2 hover:bg-grey cursor-pointer rounded"

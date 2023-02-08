@@ -35,7 +35,7 @@ const EditListReklame = ({
       <hr />
       <div
         // onClickCapture={() => setShowReklameModal(0)}
-        className="overflow-x-auto relative"
+        className="overflow-x-auto"
       >
         <table
           onClickCapture={() => setShowReklameModal(0)}

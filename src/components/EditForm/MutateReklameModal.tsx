@@ -494,23 +494,25 @@ const MutateReklameModal = ({
                 <label className="md:w-52 w-full" htmlFor="no-registrasi">
                   Gambar Reklame
                 </label>
-                <input
-                  onChange={(e) => validateImage(e.target.files)}
-                  className=" w-full hover:bg-secondary rounded-md"
-                  type="file"
-                  placeholder="Masukan Gambar Reklame..."
-                />
-                {reklameUplodedImage?.length && (
-                  <button className="w-52 bg-primary py-2 px-3 rounded-md">
-                    <a
-                      href={`${reklameUplodedImage[0].img_path}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Download Gambar
-                    </a>
-                  </button>
-                )}
+                <div className="lg:flex lg:justify-between w-full">
+                  <input
+                    onChange={(e) => validateImage(e.target.files)}
+                    className=" hover:bg-secondary rounded-md pb-3 lg:pb-0"
+                    type="file"
+                    placeholder="Masukan Gambar Reklame..."
+                  />
+                  {reklameUplodedImage?.length ? (
+                    <button className="w-52 bg-primary py-2 px-3 rounded-md">
+                      <a
+                        href={`${reklameUplodedImage[0].img_path}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Download Gambar
+                      </a>
+                    </button>
+                  ) : null}
+                </div>
               </div>
               <div className="flex md:flex-row flex-col md:gap-12 gap-1 items-center pb-7">
                 <label className="md:w-52 w-full" htmlFor="no-registrasi">

@@ -25,13 +25,11 @@ const OptionModal = ({
       id="defaultModal"
       tabIndex={-1}
       aria-hidden="true"
-      className={`${
-        showModal !== reklame_id && "hidden"
-      }  overflow-x-hidden z-50`}
+      className={`${showModal !== reklame_id && "hidden"}  overflow-x-hidden`}
     >
       <div
         onClickCapture={() => setShowModal(0)}
-        className="relative p-1 flex justify-end text-base font-medium"
+        className="absolute right-32 z-50 p-1 flex justify-end text-base font-medium"
       >
         <div className=" bg-secondary shadow-md w-48 pl-3 pt-2 h-28 rounded dark:bg-gray-700">
           <div

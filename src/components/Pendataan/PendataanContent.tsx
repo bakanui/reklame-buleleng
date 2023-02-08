@@ -18,7 +18,7 @@ const PendataanContent = ({
   const [showModal, setShowModal] = useState(0);
 
   return (
-    <div className="overflow-x-auto relative">
+    <div className="overflow-x-auto">
       <table className="w-max md:w-full text-center text-sm text-gray-500 dark:text-gray-400">
         <thead className="text-xs font-semibold text-center text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr className="bg-white">

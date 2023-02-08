@@ -230,6 +230,18 @@ const MutateReklameModal = ({
     );
   }
 
+  async function validateImage(rawImage: FileList | null) {
+    if (rawImage?.length) {
+      if (rawImage[0].size < 2000000 && rawImage[0].type === "image/jpeg") {
+        setreklameImage(rawImage);
+      } else {
+        setAlertMessage(
+          "Gambar yang diupload maxmimal 2mb dengan extensi .jpg"
+        );
+      }
+    }
+  }
+
   useEffect(() => {
     if (tgl_mulai.value && tgl_akhir.value) {
       const start = new Date(tgl_mulai.value);
@@ -483,7 +495,7 @@ const MutateReklameModal = ({
                   Gambar Reklame
                 </label>
                 <input
-                  onChange={(e) => setreklameImage(e.target.files)}
+                  onChange={(e) => validateImage(e.target.files)}
                   className=" w-full hover:bg-secondary rounded-md"
                   type="file"
                   placeholder="Masukan Gambar Reklame..."

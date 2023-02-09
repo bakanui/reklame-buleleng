@@ -20,10 +20,11 @@ const RegistrationForm = () => {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (nik_reg.length !== 16 || nik_reg !== "") {
+    if (nik_reg.length !== 16 && nik_reg !== "") {
       setAlertMessage("Data NIK Pemohon Tidak Sesuai");
     } else if (
-      (npwp_reg.length !== 15 && npwp_reg.length !== 16) ||
+      npwp_reg.length !== 15 &&
+      npwp_reg.length !== 16 &&
       npwp_reg !== ""
     ) {
       setAlertMessage("Data NPWP Pemohon Tidak Sesuai");

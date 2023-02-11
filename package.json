@@ -1,6 +1,7 @@
 {
   "name": "reklame-singaraja-x-siajaib",
   "version": "0.1.0",
+  "homepage": "/dev",
   "private": true,
   "dependencies": {
     "@reach/combobox": "^0.18.0",

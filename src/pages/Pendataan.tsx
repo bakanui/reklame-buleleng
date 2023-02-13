@@ -15,7 +15,7 @@ const Pendataan = () => {
   const [changes, setChanges] = useState(0);
 
   const { data, totalData }: { data: any; totalData: number } = useFetch(
-    `/api/reklame/list-reklame?sort=tgl_akhir&order=desc&limit=${showData}&pagenumber=${page}&no_registrasi=${keyword}&status=${statusIzin}`,
+    `/api/reklame/list-reklame?sort=created_at&order=desc&limit=${showData}&pagenumber=${page}&no_reg=${keyword}&status=${statusIzin}`,
     changes
   );
 

@@ -36,13 +36,13 @@ const EditForm = () => {
   useEffect(() => {
     if (id) {
       customFetch("/api/reklame/view/" + id).then((res) => {
-        setNo_reg(res.data.no_reg);
-        setNama_reg(res.data.nama_reg);
-        setNik_reg(res.data.nik_reg);
-        setNama_perusahaan(res.data.nama_perusahaan);
-        setAlamat_perusahaan(res.data.alamat_perusahaan);
-        setNpwp_reg(res.data.npwp_reg);
-        setNo_telp(res.data.no_telp);
+        setNo_reg(res.data.no_reg || "");
+        setNama_reg(res.data.nama_reg || "");
+        setNik_reg(res.data.nik_reg || "");
+        setNama_perusahaan(res.data.nama_perusahaan || "");
+        setAlamat_perusahaan(res.data.alamat_perusahaan || "");
+        setNpwp_reg(res.data.npwp_reg || "");
+        setNo_telp(res.data.no_telp || "");
         setReklameList(res.data.permohonan);
       });
     }

@@ -32,47 +32,47 @@ const MutateReklameModal = ({
         const currentData: ReklameDetailType = res;
 
         setBunyi_reklame({
-          value: currentData.detail[0].value,
+          value: currentData.detail[0].value || "",
           id: currentData.detail[0].id!,
         });
         setJenis_reklame({
-          value: currentData.detail[1].value,
+          value: currentData.detail[1].value || "",
           id: currentData.detail[1].id!,
         });
         setAreaPemasangan({
-          value: currentData.detail[2].value,
+          value: currentData.detail[2].value || "",
           id: currentData.detail[2].id!,
         });
         setPanjang_reklame({
-          value: currentData.detail[3].value,
+          value: currentData.detail[3].value || "",
           id: currentData.detail[3].id!,
         });
         setLebar_reklame({
-          value: currentData.detail[4].value,
+          value: currentData.detail[4].value || "",
           id: currentData.detail[4].id!,
         });
         setJumlah_muka({
-          value: currentData.detail[5].value,
+          value: currentData.detail[5].value || "",
           id: currentData.detail[5].id!,
         });
         setLama_pemasangan({
-          value: currentData.detail[6].value,
+          value: currentData.detail[6].value || "",
           id: currentData.detail[6].id!,
         });
         setTgl_mulai({
-          value: currentData.detail[7].value,
+          value: currentData.detail[7].value || "",
           id: currentData.detail[7].id!,
         });
         setTgl_akhir({
-          value: currentData.detail[8].value,
+          value: currentData.detail[8].value || "",
           id: currentData.detail[8].id!,
         });
         setTempat_pemasangan({
-          value: currentData.detail[9].value,
+          value: currentData.detail[9].value || "",
           id: currentData.detail[9].id!,
         });
         setTitik_koordinat({
-          value: currentData.detail[10].value,
+          value: currentData.detail[10].value || "",
           id: currentData.detail[10].id!,
         });
         setReklameUplodedImages(currentData.images as []);

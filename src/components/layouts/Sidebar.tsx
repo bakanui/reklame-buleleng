@@ -1,5 +1,6 @@
 import { TbEdit } from "react-icons/tb";
 import { useLocation } from "react-router-dom";
+import logoBuleleng from "./logo.png";
 
 interface SidebarProps {
   showSidebar: boolean;
@@ -16,7 +17,7 @@ const Sidebar = ({ showSidebar }: SidebarProps) => {
       <div className="overflow-y-auto py-4 md:px-5 sticky top-0 bg-primary rounded h-screen text-white">
         <a href="/" className="flex items-center pl-2.5 md:mb-12 mb-5">
           <img
-            src={`/logo.png`}
+            src={logoBuleleng}
             className="mr-3 md:w-10 md:h-10 w-10 h-10"
             alt="BulelengLogo"
           />

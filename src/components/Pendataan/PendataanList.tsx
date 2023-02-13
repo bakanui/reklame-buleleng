@@ -39,7 +39,7 @@ const PendataanList = ({
     <tr
       key={n}
       onClickCapture={() => setShowModal(0)}
-      className="bg-white dark:bg-gray-800 border-l border-b border-2"
+      className="bg-white dark:bg-gray-800  border-b border-t"
     >
       <td className="py-3 md:px-5 px-2 w-1/12">
         {(page - 1) * showData + (n + 1)}

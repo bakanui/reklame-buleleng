@@ -46,7 +46,7 @@ const PendataanHeader = ({
               type="search"
               id="default-search"
               className="block py-3 pl-5 md:w-96 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-grey focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Pencarian"
+              placeholder="Masukan no registrasi..."
             />
             <button
               type="submit"

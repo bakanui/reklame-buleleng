@@ -373,6 +373,7 @@ const ReklameModal = ({
                   onChange={(e) => validateImage(e.target.files)}
                   className=" w-full hover:bg-secondary rounded-md"
                   type="file"
+                  accept="image/jpeg"
                   placeholder="Masukan Gambar Reklame..."
                 />
               </div>

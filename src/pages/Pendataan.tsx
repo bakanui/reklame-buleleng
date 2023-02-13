@@ -4,6 +4,7 @@ import { useState } from "react";
 import PendataanHeader from "../components/Pendataan/PendataanHeader";
 import PendataanContent from "../components/Pendataan/PendataanContent";
 import useFetch from "../utils/useFetch";
+import Pagination from "./Pagination";
 
 const Pendataan = () => {
   const [showData, setShowData] = useState(11);
@@ -14,23 +15,10 @@ const Pendataan = () => {
   const [changes, setChanges] = useState(0);
 
   const { data, totalData }: { data: any; totalData: number } = useFetch(
-    `/api/reklame/list-reklame?sort=tgl_akhir&order=desc&limit=${showData}&pagenumber=${page}&nama_perusahaan=${keyword}&status=${statusIzin}`,
+    `/api/reklame/list-reklame?sort=tgl_akhir&order=desc&limit=${showData}&pagenumber=${page}&no_registrasi=${keyword}&status=${statusIzin}`,
     changes
   );
 
-  const changePages = (changes: "PREV" | "NEXT") => {
-    if (changes === "PREV") {
-      if (page > 1) {
-        setPage((current) => current - 1);
-      }
-    }
-
-    if (changes === "NEXT") {
-      if (page * showData < totalData) {
-        setPage((current) => current + 1);
-      }
-    }
-  };
   return (
     <Layouts>
       <p className="pt-7 px-7 text-xl font-semibold">Data Reklame</p>
@@ -57,28 +45,12 @@ const Pendataan = () => {
       </div>
 
       {/* Footer */}
-      <div className="flex md:flex-row gap-y-2 flex-col md:justify-between md:px-16 px-10 pb-7">
-        <p className="md:text-lg font-semibold text-center">
-          Menampilkan {showData * page - showData + 1}-
-          {showData * page < totalData ? showData * page : totalData} dari{" "}
-          {totalData} Data
-        </p>
-        <div className="flex text-center md:text-base text-sm font-medium">
-          <button
-            onClick={() => changePages("PREV")}
-            className="w-40 bg-white shadow rounded"
-          >
-            Sebelumnya
-          </button>
-          <p className="rounded w-12 p-3 bg-primary text-white">{page}</p>
-          <button
-            onClick={() => changePages("NEXT")}
-            className="w-40 bg-white text-primary shadow rounded"
-          >
-            Selanjutnya
-          </button>
-        </div>
-      </div>
+      <Pagination
+        dataCount={totalData}
+        limit={showData}
+        pageNumber={page}
+        setPageNumber={setPage}
+      />
     </Layouts>
   );
 };

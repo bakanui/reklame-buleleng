@@ -499,6 +499,7 @@ const MutateReklameModal = ({
                     onChange={(e) => validateImage(e.target.files)}
                     className=" hover:bg-secondary rounded-md pb-3 lg:pb-0"
                     type="file"
+                    accept="image/jpeg"
                     placeholder="Masukan Gambar Reklame..."
                   />
                   {reklameUplodedImage?.length ? (

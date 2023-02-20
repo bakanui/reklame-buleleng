@@ -5,6 +5,7 @@ import dataMutation from "../../utils/dataMutation";
 import Alert from "../layouts/Alert";
 import CoordinateMaps from "../RegistrationForm/CoordinateMaps";
 import uploadImage from "../../utils/uploadImage";
+import imageCompression from "browser-image-compression";
 
 interface ReklameModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -97,7 +98,7 @@ const MutateReklameModal = ({
     id: 0,
     value: "",
   });
-  const [reklameImage, setreklameImage] = useState<FileList | null>(null);
+  const [reklameImage, setreklameImage] = useState<File | null>(null);
 
   const [alertMessage, setAlertMessage] = useState("");
 
@@ -211,8 +212,8 @@ const MutateReklameModal = ({
       console.log(res);
       setChanges((current) => current + 1);
       if (reklameImage !== null) {
-        if (reklameImage[0].name) {
-          uploadReklameImage(reklameImage[0]);
+        if (reklameImage.name) {
+          uploadReklameImage(reklameImage);
         }
       }
     });
@@ -232,8 +233,20 @@ const MutateReklameModal = ({
 
   async function validateImage(rawImage: FileList | null) {
     if (rawImage?.length) {
-      if (rawImage[0].size < 2000000 && rawImage[0].type === "image/jpeg") {
-        setreklameImage(rawImage);
+      if (rawImage[0].size > 2000000 && rawImage[0].type === "image/jpeg") {
+        const options = {
+          maxSizeMB: 2,
+          maxWidthOrHeight: 3820,
+          useWebWorker: true,
+        };
+        const compressedFile = await imageCompression(rawImage[0], options);
+
+        setreklameImage(compressedFile);
+      } else if (
+        rawImage[0].size < 2000000 &&
+        rawImage[0].type === "image/jpeg"
+      ) {
+        setreklameImage(rawImage[0]);
       } else {
         setAlertMessage(
           "Gambar yang diupload maxmimal 2mb dengan extensi .jpg"

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import dataMutation from "../../utils/dataMutation";
 import Alert from "../layouts/Alert";
 import CoordinateMaps from "./CoordinateMaps";
-import { log } from "console";
 import uploadImage from "../../utils/uploadImage";
+import imageCompression from "browser-image-compression";
 
 interface ReklameModalProps {
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +29,7 @@ const ReklameModal = ({
   const [tgl_akhir, setTgl_akhir] = useState("");
   const [tempat_pemasangan, setTempat_pemasangan] = useState("");
   const [titik_koordinat, setTitik_koordinat] = useState("");
-  const [reklameImage, setreklameImage] = useState<FileList | null>(null);
+  const [reklameImage, setreklameImage] = useState<File | null>(null);
 
   const [alertMessage, setAlertMessage] = useState("");
 
@@ -140,8 +140,8 @@ const ReklameModal = ({
     await dataMutation("/api/reklame/add-reklame", body, "POST").then((res) => {
       setChanges((current) => current + 1);
       if (reklameImage !== null) {
-        if (reklameImage[0].name) {
-          uploadReklameImage(reklameImage[0], res.data[0].id);
+        if (reklameImage.name) {
+          uploadReklameImage(reklameImage, res.data[0].id);
         }
       }
       handleClearForm();
@@ -162,8 +162,20 @@ const ReklameModal = ({
 
   async function validateImage(rawImage: FileList | null) {
     if (rawImage?.length) {
-      if (rawImage[0].size < 2000000 && rawImage[0].type === "image/jpeg") {
-        setreklameImage(rawImage);
+      if (rawImage[0].size > 2000000 && rawImage[0].type === "image/jpeg") {
+        const options = {
+          maxSizeMB: 2,
+          maxWidthOrHeight: 3820,
+          useWebWorker: true,
+        };
+        const compressedFile = await imageCompression(rawImage[0], options);
+
+        setreklameImage(compressedFile);
+      } else if (
+        rawImage[0].size < 2000000 &&
+        rawImage[0].type === "image/jpeg"
+      ) {
+        setreklameImage(rawImage[0]);
       } else {
         setAlertMessage(
           "Gambar yang diupload maxmimal 2mb dengan extensi .jpg"

@@ -54,7 +54,11 @@ const PendataanList = ({
       <td className="py-3 md:px-5 px-2 w-2/12">{i.tempat_pemasangan}</td>
       <td className="py-3 md:px-5 px-2 w-1/12">{i.tgl_akhir}</td>
       <td className="py-3 md:px-5 px-2 w-2/12">
-        {i.status === "belum" ? (
+        {Date.now() > new Date(i.tgl_akhir).getTime() ? (
+          <p className="bg-grey rounded-full w-full font-semibold py-1">
+            Tidak Aktif
+          </p>
+        ) : i.status === "belum" ? (
           <p className="bg-primary rounded-full w-full font-semibold py-1">
             Belum Berizin
           </p>

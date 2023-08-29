@@ -7,16 +7,21 @@ const DashboardDeadline = () => {
     "bulan ini" | "bulan depan"
   >("bulan ini");
 
+  const currentDate = new Date();
+  const [year, setYear] = useState("2023");
+  const [month, setMonth] = useState(
+    ("0" + (currentDate.getMonth() + 1)).slice(-2)
+  );
+
   const { data } = useFetch(
-    "/api/reklame/list-reklame?sort=tgl_akhir&order=desc&jatuh_tempo=" +
-      periodeFilter,
+    `/api/permohonan?pagenumber=1&date_rangeSK=${year}-${month}-01%20s%2Fd%20${year}-${month}-31&limit=100&name=reklame`,
     0
   );
 
   return (
     <div className="bg-white shadow-md rounded-md mx-7 px-6 my-7 pt-5">
       <p className="text-lg font-semibold">Reklame Jatuh Tempo</p>
-      <div className="py-5 flex gap-7">
+      {/* <div className="py-5 flex gap-7">
         <button
           onClick={() => setPeriodeFilter("bulan ini")}
           className={`${
@@ -33,6 +38,44 @@ const DashboardDeadline = () => {
         >
           Bulan Depan
         </button>
+      </div> */}
+      <div className="py-5 flex gap-7">
+        <select
+          name="year"
+          onChange={(e) => setYear(e.target.value)}
+          value={year}
+          id="year"
+          className="w-32 p-2 rounded-md border"
+        >
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+          <option value="2029">2029</option>
+        </select>
+        <select
+          name="month"
+          onChange={(e) => setMonth(e.target.value)}
+          value={month}
+          id="month"
+          className="w-32 p-2 rounded-md border"
+        >
+          <option value="01">Januari</option>
+          <option value="02">Februari</option>
+          <option value="03">Maret</option>
+          <option value="04">April</option>
+          <option value="05">Mei</option>
+          <option value="06">Juni</option>
+          <option value="07">Juli</option>
+          <option value="08">Agustus</option>
+          <option value="09">September</option>
+          <option value="10">Oktober</option>
+          <option value="11">November</option>
+          <option value="12">Desember</option>
+        </select>
       </div>
       <hr />
       <div className="overflow-x-auto h-96 relative">
@@ -60,7 +103,7 @@ const DashboardDeadline = () => {
             </tr>
           </thead>
           <tbody className="overflow-y-auto font-medium">
-            {data.map((i: ReklameType, n: number) => (
+            {data.map((i: any, n: number) => (
               <tr key={n} className="bg-white border-y dark:bg-gray-800">
                 <th
                   scope="row"
@@ -69,12 +112,27 @@ const DashboardDeadline = () => {
                   {n + 1}
                 </th>
                 <td className="py-4 md:px-5 px-2 w-2/12">{i.no_registrasi}</td>
-                <td className="py-4 md:px-5 px-2 w-2/12">{i.jenis_reklame}</td>
+                <td className="py-4 md:px-5 px-2 w-2/12">
+                  {/* {i?.detail_permohonan?.[1]?.value} */}
+                  {
+                    i?.detail_permohonan?.[Object.keys(i?.detail_permohonan)[1]]
+                      ?.value
+                  }
+                </td>
                 <td className="py-4 md:px-5 px-2 w-3/12">
-                  {i.tempat_pemasangan}
+                  {
+                    i?.detail_permohonan?.[Object.keys(i?.detail_permohonan)[9]]
+                      ?.value
+                  }
                 </td>
                 <td className="py-4 md:px-5 px-2 w-2/12">{i.nama}</td>
-                <td className="py-4 md:px-5 px-2 w-2/12">{i.tgl_akhir}</td>
+                <td className="py-4 md:px-5 px-2 w-2/12">
+                  {" "}
+                  {
+                    i?.detail_permohonan?.[Object.keys(i?.detail_permohonan)[8]]
+                      ?.value
+                  }
+                </td>
               </tr>
             ))}
           </tbody>

@@ -14,9 +14,10 @@ const DashboardDeadline = () => {
   );
 
   const { data } = useFetch(
-    `/api/permohonan?pagenumber=1&date_rangeSK=${year}-${month}-01%20s%2Fd%20${year}-${month}-31&limit=100&name=reklame`,
+    `/api/reklame/list-reklame-expired?sort=tgl_akhir&order=desc&limit=1000000&pagenumber=1&jatuh_tempo=${year}-${month}-01%20s%2Fd%20${year}-${month}-31`,
     0
   );
+  console.log(data, year, month);
 
   return (
     <div className="bg-white shadow-md rounded-md mx-7 px-6 my-7 pt-5">
@@ -103,7 +104,7 @@ const DashboardDeadline = () => {
             </tr>
           </thead>
           <tbody className="overflow-y-auto font-medium">
-            {data.map((i: any, n: number) => (
+            {data.map((i: ReklameType, n: number) => (
               <tr key={n} className="bg-white border-y dark:bg-gray-800">
                 <th
                   scope="row"
@@ -112,27 +113,12 @@ const DashboardDeadline = () => {
                   {n + 1}
                 </th>
                 <td className="py-4 md:px-5 px-2 w-2/12">{i.no_registrasi}</td>
-                <td className="py-4 md:px-5 px-2 w-2/12">
-                  {/* {i?.detail_permohonan?.[1]?.value} */}
-                  {
-                    i?.detail_permohonan?.[Object.keys(i?.detail_permohonan)[1]]
-                      ?.value
-                  }
-                </td>
+                <td className="py-4 md:px-5 px-2 w-2/12">{i.jenis_reklame}</td>
                 <td className="py-4 md:px-5 px-2 w-3/12">
-                  {
-                    i?.detail_permohonan?.[Object.keys(i?.detail_permohonan)[9]]
-                      ?.value
-                  }
+                  {i.tempat_pemasangan}
                 </td>
                 <td className="py-4 md:px-5 px-2 w-2/12">{i.nama}</td>
-                <td className="py-4 md:px-5 px-2 w-2/12">
-                  {" "}
-                  {
-                    i?.detail_permohonan?.[Object.keys(i?.detail_permohonan)[8]]
-                      ?.value
-                  }
-                </td>
+                <td className="py-4 md:px-5 px-2 w-2/12">{i.tgl_akhir}</td>
               </tr>
             ))}
           </tbody>

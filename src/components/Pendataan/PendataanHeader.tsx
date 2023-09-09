@@ -1,5 +1,7 @@
 import { BsPlusLg } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { CSVLink } from "react-csv";
+import useFetch from "../../utils/useFetch";
 
 interface HeaderProps {
   setShowData: React.Dispatch<React.SetStateAction<number>>;
@@ -11,6 +13,15 @@ interface HeaderProps {
   keyword: string;
 }
 
+const headers = [
+  { label: "No Registrasi", key: "no_registrasi" },
+  { label: "Nama Perusahaan", key: "nama_perusahaan" },
+  { label: "Jenis Reklame", key: "jenis_reklame" },
+  { label: "Tempat Pemasangan", key: "tempat_pemasangan" },
+  { label: "Akhir Pemasangan", key: "tgl_akhir" },
+  { label: "Status", key: "status" },
+];
+
 const PendataanHeader = ({
   setShowData,
   showData,
@@ -20,6 +31,10 @@ const PendataanHeader = ({
   setStatusIzin,
   statusIzin,
 }: HeaderProps) => {
+  const { data }: { data: any; totalData: number } = useFetch(
+    `/api/reklame/list-reklame?sort=created_at&order=desc&limit=10000000&pagenumber=${1}&no_reg=${keyword}&status=${statusIzin}`,
+    0
+  );
   return (
     <>
       <div className="py-5 flex gap-3 justify-between flex-col md:flex-row md:text-base text-sm">
@@ -127,9 +142,11 @@ const PendataanHeader = ({
             </svg>
           </div>
           <div>
-            <button className="rounded-lg bg-primary text-white font-semibold h-full md:w-52">
-              Download Laporan
-            </button>
+            <CSVLink data={data} headers={headers}>
+              <button className="rounded-lg bg-primary text-white font-semibold h-full md:w-52">
+                Download Laporan
+              </button>
+            </CSVLink>
           </div>
         </div>
       </div>

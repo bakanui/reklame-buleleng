@@ -7,16 +7,22 @@ const DashboardDeadline = () => {
     "bulan ini" | "bulan depan"
   >("bulan ini");
 
+  const currentDate = new Date();
+  const [year, setYear] = useState("2023");
+  const [month, setMonth] = useState(
+    ("0" + (currentDate.getMonth() + 1)).slice(-2)
+  );
+
   const { data } = useFetch(
-    "/api/reklame/list-reklame?sort=tgl_akhir&order=desc&jatuh_tempo=" +
-      periodeFilter,
+    `/api/reklame/list-reklame-expired?sort=tgl_akhir&order=desc&limit=1000000&pagenumber=1&jatuh_tempo=${year}-${month}-01%20s%2Fd%20${year}-${month}-31`,
     0
   );
+  console.log(data, year, month);
 
   return (
     <div className="bg-white shadow-md rounded-md mx-7 px-6 my-7 pt-5">
       <p className="text-lg font-semibold">Reklame Jatuh Tempo</p>
-      <div className="py-5 flex gap-7">
+      {/* <div className="py-5 flex gap-7">
         <button
           onClick={() => setPeriodeFilter("bulan ini")}
           className={`${
@@ -33,6 +39,44 @@ const DashboardDeadline = () => {
         >
           Bulan Depan
         </button>
+      </div> */}
+      <div className="py-5 flex gap-7">
+        <select
+          name="year"
+          onChange={(e) => setYear(e.target.value)}
+          value={year}
+          id="year"
+          className="w-32 p-2 rounded-md border"
+        >
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+          <option value="2029">2029</option>
+        </select>
+        <select
+          name="month"
+          onChange={(e) => setMonth(e.target.value)}
+          value={month}
+          id="month"
+          className="w-32 p-2 rounded-md border"
+        >
+          <option value="01">Januari</option>
+          <option value="02">Februari</option>
+          <option value="03">Maret</option>
+          <option value="04">April</option>
+          <option value="05">Mei</option>
+          <option value="06">Juni</option>
+          <option value="07">Juli</option>
+          <option value="08">Agustus</option>
+          <option value="09">September</option>
+          <option value="10">Oktober</option>
+          <option value="11">November</option>
+          <option value="12">Desember</option>
+        </select>
       </div>
       <hr />
       <div className="overflow-x-auto h-96 relative">

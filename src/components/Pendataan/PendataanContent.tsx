@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ReklameType } from "../../utils/dataInterface";
 import PendataanList from "./PendataanList";
+import customFetch from "../../utils/customFetch";
 
 interface PendataanContentProps {
   data: Array<ReklameType>;
@@ -16,6 +17,14 @@ const PendataanContent = ({
   setChanges,
 }: PendataanContentProps) => {
   const [showModal, setShowModal] = useState(0);
+
+  const [id_role, setId_role] = useState(0);
+
+  useEffect(() => {
+    customFetch("/api/profile").then((res) => {
+      setId_role(res.id_role);
+    });
+  }, []);
 
   return (
     <div className="overflow-x-auto">
@@ -43,9 +52,11 @@ const PendataanContent = ({
             <th scope="col" className="py-3 md:px-5 px-2 w-2/12">
               Status
             </th>
-            <th scope="col" className="py-3 md:px-5 px-2 w-1/12">
-              <p className="w-full">Opsi</p>
-            </th>
+            {id_role === 1 ? (
+              <th scope="col" className="py-3 md:px-5 px-2 w-1/12">
+                <p className="w-full">Opsi</p>
+              </th>
+            ) : null}
           </tr>
         </thead>
         <tbody className="font-medium">
@@ -59,6 +70,7 @@ const PendataanContent = ({
               showData={showData}
               setShowModal={setShowModal}
               setChanges={setChanges}
+              id_role={id_role}
             />
           ))}
         </tbody>

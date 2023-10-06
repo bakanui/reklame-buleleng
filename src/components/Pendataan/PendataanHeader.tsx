@@ -2,6 +2,8 @@ import { BsPlusLg } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
 import useFetch from "../../utils/useFetch";
+import { useEffect, useState } from "react";
+import customFetch from "../../utils/customFetch";
 
 interface HeaderProps {
   setShowData: React.Dispatch<React.SetStateAction<number>>;
@@ -35,15 +37,25 @@ const PendataanHeader = ({
     `/api/reklame/list-reklame?sort=created_at&order=desc&limit=10000000&pagenumber=${1}&no_reg=${keyword}&status=${statusIzin}`,
     0
   );
+
+  const [id_role, setId_role] = useState(0);
+
+  useEffect(() => {
+    customFetch("/api/profile").then((res) => {
+      setId_role(res.id_role);
+    });
+  }, []);
   return (
     <>
       <div className="py-5 flex gap-3 justify-between flex-col md:flex-row md:text-base text-sm">
-        <Link to="/registrasi">
-          <button className="bg-primary md:font-semibold font-medium flex justify-center items-center gap-3 text-white rounded-lg md:w-40 w-full md:h-12 h-10">
-            <BsPlusLg className="font-extrabold" />
-            <span>Registrasi Baru</span>
-          </button>
-        </Link>
+        {id_role === 1 ? (
+          <Link to="/registrasi">
+            <button className="bg-primary md:font-semibold font-medium flex justify-center items-center gap-3 text-white rounded-lg md:w-40 w-full md:h-12 h-10">
+              <BsPlusLg className="font-extrabold" />
+              <span>Registrasi Baru</span>
+            </button>
+          </Link>
+        ) : null}
 
         <form>
           <label

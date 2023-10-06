@@ -35,6 +35,14 @@ const DetailRegister = () => {
     }
   }, [id]);
 
+  const [id_role, setId_role] = useState(0);
+
+  useEffect(() => {
+    customFetch("/api/profile").then((res) => {
+      setId_role(res.id_role);
+    });
+  }, []);
+
   return (
     <Layouts>
       <p className="pt-7 px-7 text-xl font-semibold flex items-center gap-3">
@@ -58,14 +66,16 @@ const DetailRegister = () => {
       {/* List Reklame */}
       <DetailListReklame data={reklameList} />
 
-      <div className="flex justify-end mx-7 gap-7">
-        <Link to={"/edit/" + id}>
-          <button className="bg-white border border-primary mb-5 font-semibold flex justify-center items-center gap-3 text-primary rounded-md w-40 h-12">
-            <MdModeEdit />
-            <span>Edit Data</span>
-          </button>
-        </Link>
-      </div>
+      {id_role === 1 ? (
+        <div className="flex justify-end mx-7 gap-7">
+          <Link to={"/edit/" + id}>
+            <button className="bg-white border border-primary mb-5 font-semibold flex justify-center items-center gap-3 text-primary rounded-md w-40 h-12">
+              <MdModeEdit />
+              <span>Edit Data</span>
+            </button>
+          </Link>
+        </div>
+      ) : null}
     </Layouts>
   );
 };

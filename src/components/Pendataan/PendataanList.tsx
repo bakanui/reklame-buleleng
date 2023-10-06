@@ -5,6 +5,7 @@ import { ReklameType } from "../../utils/dataInterface";
 import dataMutation from "../../utils/dataMutation";
 import DeleteConfirmModal from "../layouts/DeleteConfirmModal";
 import OptionModal from "./OptionModal";
+import OptionModalViewer from "./OptionModalViewer";
 
 interface PendataanListProps {
   i: ReklameType;
@@ -14,6 +15,7 @@ interface PendataanListProps {
   setShowModal: React.Dispatch<React.SetStateAction<number>>;
   setChanges: React.Dispatch<React.SetStateAction<number>>;
   showModal: number;
+  id_role: number;
 }
 const PendataanList = ({
   i,
@@ -23,6 +25,7 @@ const PendataanList = ({
   page,
   showData,
   setChanges,
+  id_role,
 }: PendataanListProps) => {
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
 
@@ -72,24 +75,45 @@ const PendataanList = ({
           </p>
         )}
       </td>
-      <td className="py-1 md:px-5 px-2 w-1/12">
-        <div className="flex items-center">
-          <BsThreeDots
-            className="w-full hover:text-primary text-2xl"
-            onClickCapture={() => setShowModal(i.id!)}
-          />
-          <div className="">
-            <OptionModal
-              coordinate={i.titik_koordinat}
-              registration_id={i.id_registrasi!}
-              reklame_id={i.id!}
-              setShowModal={setShowModal}
-              showModal={showModal}
-              setShowConfirmDeleteModal={setShowConfirmDeleteModal}
+      {id_role === 1 ? (
+        <td className="py-1 md:px-5 px-2 w-1/12">
+          <div className="flex items-center">
+            <BsThreeDots
+              className="w-full hover:text-primary text-2xl"
+              onClickCapture={() => setShowModal(i.id!)}
             />
+            <div className="">
+              <OptionModal
+                coordinate={i.titik_koordinat}
+                registration_id={i.id_registrasi!}
+                reklame_id={i.id!}
+                setShowModal={setShowModal}
+                showModal={showModal}
+                setShowConfirmDeleteModal={setShowConfirmDeleteModal}
+              />
+            </div>
           </div>
-        </div>
-      </td>
+        </td>
+      ) : (
+        <td className="py-1 md:px-5 px-2 w-1/12">
+          <div className="flex items-center">
+            <BsThreeDots
+              className="w-full hover:text-primary text-2xl"
+              onClickCapture={() => setShowModal(i.id!)}
+            />
+            <div className="">
+              <OptionModalViewer
+                coordinate={i.titik_koordinat}
+                registration_id={i.id_registrasi!}
+                reklame_id={i.id!}
+                setShowModal={setShowModal}
+                showModal={showModal}
+                setShowConfirmDeleteModal={setShowConfirmDeleteModal}
+              />
+            </div>
+          </div>
+        </td>
+      )}
       {showConfirmDeleteModal && (
         <td>
           <DeleteConfirmModal

@@ -55,7 +55,7 @@ const Navbar = ({ setShowSidebar }: NavbarProps) => {
                 <div>
                   <p>{name}</p>
                   <p className="text-xs">
-                    {id_role === 1 ? <span>Admin</span> : <span>User</span>}
+                    {id_role === 1 ? <span>Admin</span> : <span>Viewer</span>}
                   </p>
                 </div>
                 <svg

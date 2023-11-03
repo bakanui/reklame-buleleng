@@ -11,11 +11,12 @@ const Pendataan = () => {
   const [statusIzin, setStatusIzin] = useState<string>("");
   const [page, setPage] = useState(1);
   const [keyword, setKeyword] = useState("");
+  const [nama_perusahaan, setNama_perusahaan] = useState("");
 
   const [changes, setChanges] = useState(0);
 
   const { data, totalData }: { data: any; totalData: number } = useFetch(
-    `/api/reklame/list-reklame?sort=created_at&order=desc&limit=${showData}&pagenumber=${page}&no_reg=${keyword}&status=${statusIzin}`,
+    `/api/reklame/list-reklame?sort=created_at&order=desc&limit=${showData}&pagenumber=${page}&no_reg=${keyword}&status=${statusIzin}&nama_perusahaan=${nama_perusahaan}`,
     changes
   );
 
@@ -33,6 +34,8 @@ const Pendataan = () => {
           setPage={setPage}
           setShowData={setShowData}
           showData={showData}
+          nama_perusahaan={nama_perusahaan}
+          setNama_perusahaan={setNama_perusahaan}
         />
         {/* Content */}
         <hr />

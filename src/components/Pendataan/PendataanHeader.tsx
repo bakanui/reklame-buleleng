@@ -13,6 +13,8 @@ interface HeaderProps {
   statusIzin: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   keyword: string;
+  nama_perusahaan: string;
+  setNama_perusahaan: React.Dispatch<React.SetStateAction<string>>
 }
 
 const headers = [
@@ -32,9 +34,11 @@ const PendataanHeader = ({
   setKeyword,
   setStatusIzin,
   statusIzin,
+  nama_perusahaan,
+  setNama_perusahaan
 }: HeaderProps) => {
   const { data }: { data: any; totalData: number } = useFetch(
-    `/api/reklame/list-reklame?sort=created_at&order=desc&limit=10000000&pagenumber=${1}&no_reg=${keyword}&status=${statusIzin}`,
+    `/api/reklame/list-reklame?sort=created_at&order=desc&limit=10000000&pagenumber=${1}&no_reg=${keyword}&status=${statusIzin}&nama_perusahaan=${nama_perusahaan}`,
     0
   );
 
@@ -48,7 +52,7 @@ const PendataanHeader = ({
   return (
     <>
       <div className="py-5 flex gap-3 justify-between flex-col md:flex-row md:text-base text-sm">
-        {id_role === 1 ? (
+        {id_role === 1 || id_role === 2 ? (
           <Link to="/registrasi">
             <button className="bg-primary md:font-semibold font-medium flex justify-center items-center gap-3 text-white rounded-lg md:w-40 w-full md:h-12 h-10">
               <BsPlusLg className="font-extrabold" />
@@ -57,7 +61,49 @@ const PendataanHeader = ({
           </Link>
         ) : null}
 
-        <form>
+        <form className="flex gap-7"> 
+          <div>
+
+          <label
+            htmlFor="default-search"
+            className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
+          >
+            Search
+          </label>
+          <div className="relative">
+            <input
+              onChange={(e) => {
+                setPage(1);
+                setNama_perusahaan(e.target.value);
+              }}
+              type="search"
+              id="default-search"
+              className="block py-3 pl-5 md:w-96 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-grey focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Masukan nama perusahaan..."
+            />
+            <button
+              type="submit"
+              className="text-grey absolute right-2.5 bottom-1.5 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
+            >
+              <svg
+                aria-hidden="true"
+                className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          </div>
+          <div>
           <label
             htmlFor="default-search"
             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
@@ -95,6 +141,7 @@ const PendataanHeader = ({
                 ></path>
               </svg>
             </button>
+          </div>
           </div>
         </form>
       </div>

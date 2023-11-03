@@ -1,8 +1,8 @@
 import { useState } from "react";
 import dataMutation from "../utils/dataMutation";
 const Login = () => {
-  const [email, setEmail] = useState("gusdika58@gmail.com");
-  const [password, setPassword] = useState("secret");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = () => {
     const body = {

@@ -49,6 +49,17 @@ const PendataanHeader = ({
       setId_role(res.id_role);
     });
   }, []);
+
+  const [noReg, setNoReg] = useState("");
+  const [compName, setCompName] = useState("")
+
+  function searchWithCompName(input: string) {
+      setNama_perusahaan(input)
+  }
+
+  function searchWithNoReg(input: string) {
+    setKeyword(input)
+}
   return (
     <>
       <div className="py-5 flex gap-3 justify-between flex-col md:flex-row md:text-base text-sm">
@@ -74,7 +85,7 @@ const PendataanHeader = ({
             <input
               onChange={(e) => {
                 setPage(1);
-                setNama_perusahaan(e.target.value);
+                setCompName(e.target.value);
               }}
               type="search"
               id="default-search"
@@ -82,7 +93,8 @@ const PendataanHeader = ({
               placeholder="Masukan nama perusahaan..."
             />
             <button
-              type="submit"
+              type="button"
+              onClick={() => searchWithCompName(compName)}
               className="text-grey absolute right-2.5 bottom-1.5 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
             >
               <svg
@@ -114,7 +126,7 @@ const PendataanHeader = ({
             <input
               onChange={(e) => {
                 setPage(1);
-                setKeyword(e.target.value);
+                setNoReg(e.target.value);
               }}
               type="search"
               id="default-search"
@@ -122,7 +134,8 @@ const PendataanHeader = ({
               placeholder="Masukan no registrasi..."
             />
             <button
-              type="submit"
+                type="button"
+                onClick={() => searchWithCompName(compName)}
               className="text-grey absolute right-2.5 bottom-1.5 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
             >
               <svg

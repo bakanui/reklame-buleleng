@@ -52,7 +52,7 @@ const PendataanHeader = ({
   return (
     <>
       <div className="py-5 flex gap-3 justify-between flex-col md:flex-row md:text-base text-sm">
-        {id_role === 1 || id_role === 2 ? (
+        {id_role === 1 || id_role === 5 ? (
           <Link to="/registrasi">
             <button className="bg-primary md:font-semibold font-medium flex justify-center items-center gap-3 text-white rounded-lg md:w-40 w-full md:h-12 h-10">
               <BsPlusLg className="font-extrabold" />

@@ -17,8 +17,8 @@ const Navbar = ({ setShowSidebar }: NavbarProps) => {
 
   useEffect(() => {
     customFetch("/api/profile").then((res) => {
-      setName(res.name);
-      setId_role(res.id_role);
+      setName(res?.name);
+      setId_role(res?.id_role);
     });
   }, []);
 
@@ -55,7 +55,7 @@ const Navbar = ({ setShowSidebar }: NavbarProps) => {
                 <div>
                   <p>{name}</p>
                   <p className="text-xs">
-                    {id_role === 1 ? <span>Admin</span> : <span>Viewer</span>}
+                    {id_role === 1 ? <span>Admin</span> : id_role === 5 ? <span>Petugas Perekam</span> : <span>Viewer</span>}
                   </p>
                 </div>
                 <svg

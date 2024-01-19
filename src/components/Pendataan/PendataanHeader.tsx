@@ -95,6 +95,12 @@ const PendataanHeader = ({
             <button
               type="button"
               onClick={() => searchWithCompName(compName)}
+
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  searchWithCompName(compName)
+                }
+              }}
               className="text-grey absolute right-2.5 bottom-1.5 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
             >
               <svg
@@ -135,7 +141,12 @@ const PendataanHeader = ({
             />
             <button
                 type="button"
-                onClick={() => searchWithCompName(compName)}
+                onClick={() => searchWithNoReg(keyword)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    searchWithNoReg(keyword)
+                  }
+                }}
               className="text-grey absolute right-2.5 bottom-1.5 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
             >
               <svg

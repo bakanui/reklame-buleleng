@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { ReklameType } from "../../utils/dataInterface";
@@ -6,6 +6,7 @@ import dataMutation from "../../utils/dataMutation";
 import DeleteConfirmModal from "../layouts/DeleteConfirmModal";
 import OptionModal from "./OptionModal";
 import OptionModalViewer from "./OptionModalViewer";
+import customFetch from "../../utils/customFetch";
 
 interface PendataanListProps {
   i: ReklameType;
@@ -28,6 +29,7 @@ const PendataanList = ({
   id_role,
 }: PendataanListProps) => {
   const [showConfirmDeleteModal, setShowConfirmDeleteModal] = useState(false);
+  const [name, setName] = useState("")
 
   const handleDeleteReklame = async (id: number) => {
     await dataMutation("/api/reklame/delete-reklame/" + id, {}, "DELETE").then(
@@ -37,6 +39,12 @@ const PendataanList = ({
       }
     );
   };
+
+  useEffect(() => {
+    customFetch("/api/profile").then((res) => {
+      setName(res?.name);
+    });
+  }, []);
 
   return (
     <tr
@@ -56,6 +64,7 @@ const PendataanList = ({
       <td className="py-3 md:px-5 px-2 w-2/12">{i.jenis_reklame}</td>
       <td className="py-3 md:px-5 px-2 w-2/12">{i.tempat_pemasangan}</td>
       <td className="py-3 md:px-5 px-2 w-1/12">{i.tgl_akhir}</td>
+      <td className="py-3 md:px-5 px-2 w-1/12">{name}</td>
       <td className="py-3 md:px-5 px-2 w-2/12">
         {Date.now() > new Date(i.tgl_akhir).getTime() ? (
           <p className="bg-grey rounded-full w-full font-semibold py-1">

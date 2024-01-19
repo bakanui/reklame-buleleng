@@ -50,6 +50,9 @@ const PendataanContent = ({
               Akhir Pemasangan
             </th>
             <th scope="col" className="py-3 md:px-5 px-2 w-2/12">
+              Petugas Perekam
+            </th>
+            <th scope="col" className="py-3 md:px-5 px-2 w-2/12">
               Status
             </th>
             {id_role === 1 ? (
